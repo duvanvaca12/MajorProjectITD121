@@ -7,9 +7,15 @@ namespace MajorProjectITD121
         static void Main(string[] args)
         {   
             Console.WriteLine("Hello World!");
-            Console.WriteLine("again");
+            Console.WriteLine("Hello Dane");
+            Console.WriteLine("C#");
             Console.ReadLine();
             
+        }
+
+        static void Hello()
+        {
+            Console.WriteLine("Hello");
         }
     }
 }
