@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "MajorProjectITD121/1.0.0": {
+        "runtime": {
+          "MajorProjectITD121.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MajorProjectITD121/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
