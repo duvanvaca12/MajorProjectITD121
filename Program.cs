@@ -20,30 +20,35 @@ class Customer
 }
 class Product
 {
-    public Customer Name {get; set; }
+    public int ProductName {get; set; }
     public int Price {get; set; }
-    public int Quality {get; set; }
+    public int Quantity {get; set; }
     public int ProductID {get; set;}
-    public Product (Customer name, int price, int quality)
+    public Product (int name, int price, int quantity)
     {
-       //ProductID = Customer ID;
-       Name = name;
+       //ProductID
+       ProductName = name;
        Price = price;
-       Quality = quality;
+       Quantity = quantity;
     }
 }
 class Sale
 {
-    public Customer ID;
+    public int CustomerID;
     public int ProductID;
-    public Customer quantity;
-    public Sale(Customer id, int productId, Customer quantity)
+    public int Quantity;
+    public Sale(int customerId, int productId, int quantity)
     {
-        ID = id;
-        ProductID = ID;
+        CustomerID = customerId;
         ProductID = productId;
+        Quantity = quantity;
 
     }
+
+}
+
+class Store
+{
 
 }
 
