@@ -40,6 +40,8 @@ class Sale
     public Sale(Customer id, int productId, Customer quantity)
     {
         ID = id;
+        ProductID = ID;
+        ProductID = productId;
 
     }
 
