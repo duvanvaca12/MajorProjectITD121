@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//class Sale
-//{
-//    public bool Delivery {get; set;}
-//    public bool SpendLoyalty{get; set;}
-//    public Sale()
-//}
+class Sale
+{
+    public bool Delivery {get; set;}
+    public bool SpendLoyalty{get; set;}
+    public int Stock{get;set; }
+
+    public Sale(bool delivery,bool spendLoyalty)
+    {
+        Delivery = delivery;
+        SpendLoyalty = spendLoyalty;
+    }
+}
 class Staff
 {
     public string Input {get;set; }
@@ -19,11 +25,12 @@ class Customer
     public string Phone {get;set; }
     public string Address {get;set; }
     public string Email {get; set; }
-    public int CustomerID = 0;
+    public int CustomerID {get;set;}
     public int LoyaltyPoint {get; set; }
-    public Customer(string name, string phone,string address,string email)
+    public Customer(string name, string phone,
+    string address,string email, int customerID)
     {
-        CustomerID += 1;
+        CustomerID = customerID;
         Name = name;
         Phone = phone;
         Address = address;
@@ -35,9 +42,11 @@ class Product
     public int Price {get; set; }
     public int Quantity {get; set;} 
     public int ProductID = 0;
+    private static int _numProducts = 0;
     public Product(string productName, int price, int quantity)
     {
-        ProductID += 1;
+        _numProducts += 1;
+        ProductID = _numProducts;
         ProductName = productName;
         Price = price; 
         Quantity = quantity;
@@ -55,9 +64,10 @@ class Store
         _customers = new List<Customer> ();
     }
     public void AddCustomer(string name,string phone,string address,
-    string email)
+    string email,int customerID)
     {
-        Customer newCustomer = new Customer(name,phone,address,email);
+        Customer newCustomer = new Customer(name,phone,address,
+        email,customerID);
         _customers.Add(newCustomer);
     }
     public void AddProduct(string productName, int price, int quantity)
@@ -76,13 +86,16 @@ class Store
         }
         return null;
     }
+    public void ExecuteSale(int customerID,int productID,int quantity)
+    {
+        
+    }
     public void DisplayAll()
     {
         List<string[]> printCustomerDB = new List<string[]>();
         List<string[]> printProductDB = new List<string[]>();
         // displays the header row
-        printCustomerDB.Add(new string[] { "ID", "Name", "Address",
-        "Loyalty points"});
+        printCustomerDB.Add(new string[] {"ID", "Name","Loyalty points"});
         printProductDB.Add(new string[] {"ID", "Product name","In stock"});
 
         // add details of all books to the print data
@@ -91,7 +104,6 @@ class Store
             printCustomerDB.Add(new string[] {
                 _customers[i].CustomerID.ToString(),
                 _customers[i].Name,
-                _customers[i].Address,
                 _customers[i].LoyaltyPoint.ToString()
             });
         }
@@ -113,8 +125,9 @@ class Program
     {
         Store store = new Store();
         store.AddCustomer("Ted Lasso","345-656-45",
-        "Baker 24 street","tedlasso@email.com");
-        store.AddProduct("Mario",34,30);
+        "Baker 24 street","tedlasso@email.com",1);
+        store.AddProduct("Mario",105,30);
+        store.AddProduct("Zelda",80,80);
         store.DisplayAll();
         Console.ReadLine();
     }
