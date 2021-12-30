@@ -40,17 +40,16 @@ class Product
 {
     public string ProductName {get; set; }
     public int Price {get; set; }
-    public int Quantity {get; set;} 
+    public int RemainQuantity {get; set;} 
     public int ProductID = 0;
     private static int _numProducts = 0;
-    public Product(string productName, int price, int quantity)
+    public Product(string productName, int price, int remainQuantity)
     {
         _numProducts += 1;
         ProductID = _numProducts;
         ProductName = productName;
         Price = price; 
-        Quantity = quantity;
-         
+        RemainQuantity = remainQuantity;
     }   
 }
 
@@ -75,7 +74,18 @@ class Store
         Product newProduct = new Product(productName,price,quantity);
         _products.Add(newProduct);
     }
-    public Product GetProduct(int productID,int quantity)
+    public Customer GetCustomer(int customerID)
+    {
+        for (int i = 0; i < _products.Count; i++)
+        {
+            if (_customers[i].CustomerID == customerID)
+            {
+                return _customers[i];
+            }
+        }
+        return null;
+    }
+    public Product GetProduct(int productID)
     {
         for (int i = 0; i < _products.Count; i++)
         {
@@ -88,7 +98,9 @@ class Store
     }
     public void ExecuteSale(int customerID,int productID,int quantity)
     {
-        
+        Customer customer = GetCustomer(customerID);
+        Product product = GetProduct(productID);
+        product.RemainQuantity -= quantity;
     }
     public void DisplayAll()
     {
@@ -96,7 +108,7 @@ class Store
         List<string[]> printProductDB = new List<string[]>();
         // displays the header row
         printCustomerDB.Add(new string[] {"ID", "Name","Loyalty points"});
-        printProductDB.Add(new string[] {"ID", "Product name","In stock"});
+        printProductDB.Add(new string[] {"ID", "Product name","Price","In stock"});
 
         // add details of all books to the print data
         for (int i = 0; i < _customers.Count; i++)
@@ -113,7 +125,7 @@ class Store
                 _products[i].ProductID.ToString(),
                 _products[i].ProductName,
                 _products[i].Price.ToString(),
-                _products[i].Quantity.ToString()
+                _products[i].RemainQuantity.ToString()
             });
         }
         Utility.PrintTable(printCustomerDB);
@@ -126,8 +138,9 @@ class Program
         Store store = new Store();
         store.AddCustomer("Ted Lasso","345-656-45",
         "Baker 24 street","tedlasso@email.com",1);
-        store.AddProduct("Mario",105,30);
+        store.AddProduct("Mario",105,50);
         store.AddProduct("Zelda",80,80);
+        store.ExecuteSale(1,1,2);
         store.DisplayAll();
         Console.ReadLine();
     }
