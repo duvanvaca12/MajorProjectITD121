@@ -123,6 +123,7 @@ namespace CoreShop.Entities
     {
         CustomerDB customer = GetCustomer(customerID);
         ProductDB product = GetProduct(productID);
+        customer.LoyaltyPoint += 10;
         customer.SpendLoyalty = spendLoyalty;
         product.Delivery = delivery;
         product.RemainQuantity -= quantity;
