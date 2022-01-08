@@ -15,13 +15,19 @@ namespace CoreShop.Entities
             SpendLoyalty = spendLoyalty;
         }
     }
-    class Staff
+    class StaffDB
+{
+    public string ID {get;set; }
+    public string Password {get;set; }
+    public bool Admin {get; set;}
+    public StaffDB(string id,string password, bool admin)
     {
-        public string Input {get;set; }
-        public string Password = "admin";
-        public bool Admin {get; set;}
+        ID = id;
+        Password = password;
+        Admin = admin;
     }
-    class Customer 
+}
+    class CustomerDB 
     {
         public string Name {get;set;}
         public string Phone {get;set; }
@@ -29,54 +35,67 @@ namespace CoreShop.Entities
         public string Email {get; set; }
         public int CustomerID {get;set;}
         public int LoyaltyPoint {get; set; }
-        public Customer(string name, string phone,
+        public bool SpendLoyalty;
+        public CustomerDB(string name, string phone,
         string address,string email, int customerID)
         {
             CustomerID = customerID;
             Name = name;
             Phone = phone;
             Address = address;
+            LoyaltyPoint = 500;
         }
     }
-    class Product
+    class ProductDB
     {
         public string ProductName {get; set; }
         public int Price {get; set; }
+        public int RemainQuantity {get; set;}
         public int Quantity {get; set;} 
         public int ProductID = 0;
         private static int _numProducts = 0;
-        public Product(string productName, int price, int quantity)
+        public bool Delivery;
+        public ProductDB(string productName, int price, int quantity)
         {
             _numProducts += 1;
             ProductID = _numProducts;
             ProductName = productName;
             Price = price; 
-            Quantity = quantity;
+            RemainQuantity = quantity;
             
         }   
     }
-    class Store
+    class StoreDB
     {
-        private List<Product> _products;
-        private List<Customer> _customers;
-        public Store()
+        private List<ProductDB> _products;
+        private List<CustomerDB> _customers;
+        private List<StaffDB> _staffs;
+        public StoreDB()
         {
-            _products = new List<Product> ();
-            _customers = new List<Customer> ();
+            _products = new List<ProductDB> ();
+            _customers = new List<CustomerDB> ();
         }
-        public void AddCustomer(string name,string phone,string address,
+        public void AddStaff(string id, string password, bool admin)
+    {
+        StaffDB newstaff = new StaffDB(id,password,admin);
+        if (admin == true)
+        {
+           _staffs.Add(newstaff); 
+        }
+    }
+        public void AddCustomerDB(string name,string phone,string address,
         string email,int customerID)
         {
-            Customer newCustomer = new Customer(name,phone,address,
+            CustomerDB newCustomer = new CustomerDB(name,phone,address,
             email,customerID);
             _customers.Add(newCustomer);
         }
-        public void AddProduct(string productName, int price, int quantity)
+        public void AddProductDB(string productName, int price, int quantity)
         {
-            Product newProduct = new Product(productName,price,quantity);
+            ProductDB newProduct = new ProductDB(productName,price,quantity);
             _products.Add(newProduct);
         }
-        public Product GetProduct(int productID,int quantity)
+        public ProductDB GetProduct(int productID)
         {
             for (int i = 0; i < _products.Count; i++)
             {
@@ -87,10 +106,36 @@ namespace CoreShop.Entities
             }
             return null;
         }
-        public void ExecuteSale(int customerID,int productID,int quantity)
+        public CustomerDB GetCustomer(int customerID)
+    {
+        for (int i = 0; i < _products.Count; i++)
         {
-            
+            if (_customers[i].CustomerID == customerID)
+            {
+                return _customers[i];
+            }
         }
+        return null;
+    }
+
+    public void ExecuteSale(int customerID,int productID,int quantity,
+    bool spendLoyalty, bool delivery)
+    {
+        CustomerDB customer = GetCustomer(customerID);
+        ProductDB product = GetProduct(productID);
+        customer.SpendLoyalty = spendLoyalty;
+        product.Delivery = delivery;
+        product.RemainQuantity -= quantity;
+        if (customer.SpendLoyalty == true)
+        {
+            customer.LoyaltyPoint -= product.Price * 10;
+        }
+        if (product.Delivery == true)
+        {
+             product.Price += 20;
+        }
+        
+    }
         public void DisplayAll()
         {
             List<string[]> printCustomerDB = new List<string[]>();
@@ -114,7 +159,7 @@ namespace CoreShop.Entities
                     _products[i].ProductID.ToString(),
                     _products[i].ProductName,
                     _products[i].Price.ToString(),
-                    _products[i].Quantity.ToString()
+                    _products[i].RemainQuantity.ToString()
                 });
             }
             Utility.PrintTable(printCustomerDB);
