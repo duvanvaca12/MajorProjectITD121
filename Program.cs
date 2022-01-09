@@ -1,22 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 //using DatabaseShop.Entities;
-
-    /// <summary>
-    /// Class for login. This validate {user,password and if the user is admin}
-    /// </summary>
-    public class login
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public bool Admin { get; set; }
-
-        Console.WriteLine("Staff");
-
-    }
-    /// <summary>
-    /// 
-    /// </summary>
     class Sale
     {
         public bool Delivery {get; set;}
@@ -31,10 +15,10 @@ using System.Collections.Generic;
     }
     public class StaffDB
     {
-        public string ID {get;set; }
+        public int ID {get;set; }
         public string Password {get;set; }
         public bool Admin {get; set;}
-        public StaffDB(string id,string password, bool admin)
+        public StaffDB(int id,string password, bool admin)
         {
             ID = id;
             Password = password;
@@ -57,7 +41,7 @@ using System.Collections.Generic;
             Name = name;
             Phone = phone;
             Address = address;
-            LoyaltyPoint = 500;
+            LoyaltyPoint = 460;
         }
     }
     class ProductDB
@@ -77,26 +61,30 @@ using System.Collections.Generic;
             Price = price; 
             RemainQuantity = quantity;
             
-        }   
+        }
     }
     class StoreDB
     {
+        
         private List<ProductDB> _products;
         private List<CustomerDB> _customers;
         private List<StaffDB> _staffs;
+
+        
         public StoreDB()
         {
             _products = new List<ProductDB> ();
             _customers = new List<CustomerDB> ();
+            _staffs = new List<StaffDB> ();
         }
-        public void AddStaff(string id, string password, bool admin)
-    {
-        StaffDB newstaff = new StaffDB(id,password,admin);
-        if (admin == true)
+        public void AddStaff(int id, string password, bool admin)
         {
-           _staffs.Add(newstaff); 
+            StaffDB newstaff = new StaffDB(id,password,admin);
+            if (admin == true)
+            {
+            _staffs.Add(newstaff); 
+            }
         }
-    }
         public void AddCustomerDB(string name,string phone,string address,
         string email,int customerID)
         {
@@ -121,7 +109,7 @@ using System.Collections.Generic;
             return null;
         }
         public CustomerDB GetCustomer(int customerID)
-    {
+        {
         for (int i = 0; i < _products.Count; i++)
         {
             if (_customers[i].CustomerID == customerID)
@@ -130,7 +118,19 @@ using System.Collections.Generic;
             }
         }
         return null;
-    }
+        }
+
+        public StaffDB GetLogin(int Username, string Password)
+        {
+            for (int i = 0; i < _staffs.Count; i++)
+            {
+                if (_staffs[i].ID == Username && _staffs[i].Password == Password)
+                {
+                    return _staffs[i];
+                }
+            }
+            return null;
+        }
 
     public void ExecuteSale(int customerID,int productID,int quantity,
     bool spendLoyalty, bool delivery)
@@ -143,15 +143,32 @@ using System.Collections.Generic;
         product.RemainQuantity -= quantity;
         if (customer.SpendLoyalty == true)
         {
-            customer.LoyaltyPoint -= product.Price * 10;
+            customer.LoyaltyPoint -= product.Price * quantity;
         }
         if (product.Delivery == true)
         {
-             product.Price += 20;
+            product.Price += 20;
         }
         
     }
-        public void DisplayAll()
+    public bool ValidateLogin(int ID, string password)
+    {
+        bool state = false;
+        StaffDB User = GetLogin(ID, password);
+        if (User != null)
+        {
+            if (User.ID == ID && User.Password == password)
+            {
+                state = true;
+            }
+        }
+        else
+        {
+            state = false;
+        }
+        return state;
+    }
+    public void DisplayAll()
         {
             List<string[]> printCustomerDB = new List<string[]>();
             List<string[]> printProductDB = new List<string[]>();
@@ -179,6 +196,7 @@ using System.Collections.Generic;
             }
             Utility.PrintTable(printCustomerDB);
             Utility.PrintTable(printProductDB);
+            
         }
     
 }
@@ -187,6 +205,7 @@ class Program
 {
     static void Main(string[] args)
     {
+
         StoreDB store = new StoreDB();
         store.AddCustomerDB("Ted Lasso","345-656-45",
         "Baker 24 street","tedlasso@email.com",1);
@@ -194,9 +213,32 @@ class Program
         "Cook 24 street","kadajin@email.com",2);
         store.AddProductDB("Witcher",105,50);
         store.AddProductDB("MW3",80,80);
-        store.ExecuteSale(1,1,2,true,true);
-        store.DisplayAll();
-        Console.ReadLine();
+        store.AddStaff(1,"admin", true);
+        Console.WriteLine("=== STAFF ===");
+        Console.Write("ID User: ");
+        var ID = 0;
+        try 
+        {
+            ID = int.Parse(Console.ReadLine());
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("The number must be in an integer");
+            return;
+        }
+        Console.Write("Password: ");
+        var password = Console.ReadLine();
+        var login = store.ValidateLogin(ID, password);
+        if (login == true) 
+        {
+            store.ExecuteSale(1,1,2,true,true);
+            store.DisplayAll();
+            Console.ReadLine();
+        }
+        else
+        {
+            Console.WriteLine("User not found try again");
+        }
     }
 }
 
