@@ -1,27 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-//using DatabaseShop.Entities;
 
-    /// <summary>
-    /// Class for login. This validate {user,password and if the user is admin}
-    /// </summary>
-    public class login
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public bool Admin { get; set; }
-
-        Console.WriteLine("Staff");
-
-    }
-    /// <summary>
-    /// 
-    /// </summary>
+namespace CoreShop.Entities
+{
     class Sale
     {
         public bool Delivery {get; set;}
-        public bool SpendLoyalty {get; set;}
-        public int Stock{get; set;}
+        public bool SpendLoyalty{get; set;}
+        public int Stock{get;set; }
 
         public Sale(bool delivery,bool spendLoyalty)
         {
@@ -29,18 +15,18 @@ using System.Collections.Generic;
             SpendLoyalty = spendLoyalty;
         }
     }
-    public class StaffDB
+    class StaffDB
+{
+    public string ID {get;set; }
+    public string Password {get;set; }
+    public bool Admin {get; set;}
+    public StaffDB(string id,string password, bool admin)
     {
-        public string ID {get;set; }
-        public string Password {get;set; }
-        public bool Admin {get; set;}
-        public StaffDB(string id,string password, bool admin)
-        {
-            ID = id;
-            Password = password;
-            Admin = admin;
-        }
+        ID = id;
+        Password = password;
+        Admin = admin;
     }
+}
     class CustomerDB 
     {
         public string Name {get;set;}
@@ -157,7 +143,7 @@ using System.Collections.Generic;
             List<string[]> printProductDB = new List<string[]>();
             // displays the header row
             printCustomerDB.Add(new string[] {"ID", "Name","Loyalty points"});
-            printProductDB.Add(new string[] {"ID", "Product name","Price","In stock"});
+            printProductDB.Add(new string[] {"ID", "Product name","In stock"});
 
             // add details of all books to the print data
             for (int i = 0; i < _customers.Count; i++)
@@ -180,23 +166,5 @@ using System.Collections.Generic;
             Utility.PrintTable(printCustomerDB);
             Utility.PrintTable(printProductDB);
         }
-    
-}
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        StoreDB store = new StoreDB();
-        store.AddCustomerDB("Ted Lasso","345-656-45",
-        "Baker 24 street","tedlasso@email.com",1);
-        store.AddCustomerDB("Kada Jin","435-356-455",
-        "Cook 24 street","kadajin@email.com",2);
-        store.AddProductDB("Witcher",105,50);
-        store.AddProductDB("MW3",80,80);
-        store.ExecuteSale(1,1,2,true,true);
-        store.DisplayAll();
-        Console.ReadLine();
     }
 }
-
