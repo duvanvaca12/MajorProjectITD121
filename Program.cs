@@ -214,6 +214,10 @@ class Program
         store.AddProductDB("Witcher",105,50);
         store.AddProductDB("MW3",80,80);
         store.AddStaff(1,"admin", true);
+
+        // Login part. Use Userinput.CS methods
+        while(true)
+        {
         Console.WriteLine("=== STAFF ===");
         Console.Write("ID User: ");
         var ID = 0;
@@ -238,6 +242,7 @@ class Program
         else
         {
             Console.WriteLine("User not found try again");
+        }
         }
     }
 }
