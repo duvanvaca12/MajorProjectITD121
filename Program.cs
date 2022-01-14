@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 //using DatabaseShop.Entities;
-    class Sale
-    {
-        public bool Delivery {get; set;}
-        public bool SpendLoyalty {get; set;}
-        public int Stock{get; set;}
+    
+    //class Sale
+    //{
+    //    public bool Delivery {get; set;}
+    //    public bool SpendLoyalty {get; set;}
+    //    public int Stock{get; set;}
 
-        public Sale(bool delivery,bool spendLoyalty)
-        {
-            Delivery = delivery;
-            SpendLoyalty = spendLoyalty;
-        }
-    }
+    //    public Sale(bool delivery,bool spendLoyalty)
+    //    {
+    //        Delivery = delivery;
+    //        SpendLoyalty = spendLoyalty;
+    //    }
+    //}
     public class StaffDB
     {
         public int ID {get;set; }
@@ -34,6 +35,7 @@ using System.Collections.Generic;
         public int CustomerID {get;set;}
         public int LoyaltyPoint {get; set; }
         public bool SpendLoyalty;
+        public bool Delivery;
         public CustomerDB(string name, string phone,
         string address,string email, int customerID)
         {
@@ -52,7 +54,7 @@ using System.Collections.Generic;
         public int Quantity {get; set;} 
         public int ProductID = 0;
         private static int _numProducts = 0;
-        public bool Delivery;
+        //public bool Delivery;
         public ProductDB(string productName, int price, int quantity)
         {
             _numProducts += 1;
@@ -139,15 +141,17 @@ using System.Collections.Generic;
         ProductDB product = GetProduct(productID);
         customer.LoyaltyPoint += 10;
         customer.SpendLoyalty = spendLoyalty;
-        product.Delivery = delivery;
+        customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
+        double TotalPrice;
+        TotalPrice = product.Quantity * product.Price;
         if (customer.SpendLoyalty == true)
         {
             customer.LoyaltyPoint -= product.Price * quantity;
         }
-        if (product.Delivery == true)
+        if (customer.Delivery == true)
         {
-            product.Price += 20;
+            TotalPrice += 20;
         }
         
     }
@@ -211,6 +215,8 @@ class Program
         "Baker 24 street","tedlasso@email.com",1);
         store.AddCustomerDB("Kada Jin","435-356-455",
         "Cook 24 street","kadajin@email.com",2);
+        store.AddCustomerDB("May Jay","534-643-852",
+        "Salmon 24 street","Mayday@email.com",3);
         store.AddProductDB("Witcher",105,50);
         store.AddProductDB("MW3",80,80);
         store.AddStaff(1,"admin", true);
@@ -236,6 +242,7 @@ class Program
         if (login == true) 
         {
             store.ExecuteSale(1,1,2,true,true);
+            store.ExecuteSale(2,2,5,true,false);
             store.DisplayAll();
             Console.ReadLine();
         }

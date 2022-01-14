@@ -8,24 +8,26 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\duvan\\.nuget\\packages\\": {}
+    "C:\\Users\\yeoks\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\duvan\\Documents\\MajorProjectITD121\\MajorProjectITD121.csproj",
+      "projectUniqueName": "C:\\Users\\C#\\MajorProjectITD121\\MajorProjectITD121.csproj",
       "projectName": "MajorProjectITD121",
-      "projectPath": "c:\\Users\\duvan\\Documents\\MajorProjectITD121\\MajorProjectITD121.csproj",
-      "packagesPath": "C:\\Users\\duvan\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\duvan\\Documents\\MajorProjectITD121\\obj\\",
+      "projectPath": "C:\\Users\\C#\\MajorProjectITD121\\MajorProjectITD121.csproj",
+      "packagesPath": "C:\\Users\\yeoks\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\C#\\MajorProjectITD121\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\duvan\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\yeoks\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -58,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
       }
     }
   }
