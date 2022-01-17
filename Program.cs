@@ -54,7 +54,7 @@ using System.Collections.Generic;
         public int Quantity {get; set;} 
         public int ProductID = 0;
         private static int _numProducts = 0;
-        //public bool Delivery;
+        
         public ProductDB(string productName, int price, int quantity)
         {
             _numProducts += 1;
@@ -143,11 +143,12 @@ using System.Collections.Generic;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
-        double TotalPrice;
-        TotalPrice = product.Quantity * product.Price;
+        //double TotalPrice;
+        double TotalPrice = product.Quantity * product.Price;
         if (customer.SpendLoyalty == true)
         {
-            customer.LoyaltyPoint -= product.Price * quantity;
+            customer.LoyaltyPoint -= 200;
+            //customer.LoyaltyPoint -= product.Price * quantity;
         }
         if (customer.Delivery == true)
         {
