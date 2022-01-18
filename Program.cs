@@ -146,19 +146,20 @@ using Database.Shop;
     public void ExecuteSale(int customerID,int productID,int quantity,
     bool spendLoyalty, bool delivery)
     {
+        
         CustomerDB customer = GetCustomer(customerID);
         ProductDB product = GetProduct(productID);
-        customer.LoyaltyPoint += 50;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
         //double TotalPrice;
         double TotalPrice = product.Quantity * product.Price;
-        if (customer.SpendLoyalty == true)
+        if (customer.SpendLoyalty == true && customer.LoyaltyPoint > 200)
         {
             customer.LoyaltyPoint -= 200;
             //customer.LoyaltyPoint -= product.Price * quantity;
         }
+        customer.LoyaltyPoint += product.Price * quantity;
         if (customer.Delivery == true)
         {
             TotalPrice += 20;
@@ -243,37 +244,56 @@ class Program
         store.AddProductDB("Witcher",105,50);
         store.AddProductDB("MW3",80,80);
         store.AddStaff(1,"admin", true);
-
-        // Login part. Use Userinput.CS methods
         while(true)
         {
-        Console.WriteLine("=== STAFF ===");
-        Console.Write("ID User: ");
-        var ID = 0;
-        try 
-        {
-            ID = int.Parse(Console.ReadLine());
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("The number must be in an integer");
-            return;
-        }
-        Console.Write("Password: ");
-        var password = Console.ReadLine();
-        var login = store.ValidateLogin(ID, password);
-        if (login == true) 
-        {
+
+            var login = store.ValidateLogin(1, "admin");
+
+            if (login == true) 
+            {
             store.ExecuteSale(1,1,2,true,true);
-            store.ExecuteSale(2,2,5,true,false);
+            //store.ExecuteSale(2,2,1,false,false);
+            store.ExecuteSale(1,1,2,false,true);
             store.DisplayAll();
-            Console.ReadLine();
+            break;
+            }
+
         }
-        else
-        {
-            Console.WriteLine("User not found try again");
-        }
-        }
+
+    // static void PartB()
+    // {
+            // Console.WriteLine("=== STAFF ===");
+            // Console.Write("ID User: ");
+    //             // Login part. Use Userinput.CS methods
+    //     while(true)
+    //     {
+    //     Console.WriteLine("=== STAFF ===");
+    //     Console.Write("ID User: ");
+    //     var ID = 0;
+    //     try 
+    //     {
+    //         ID = int.Parse(Console.ReadLine());
+    //     }
+    //     catch (Exception)
+    //     {
+    //         Console.WriteLine("The number must be in an integer");
+    //         return;
+    //     }
+    //     Console.Write("Password: ");
+    //     var password = Console.ReadLine();
+    //     var login = store.ValidateLogin(ID, password);
+    //     if (login == true) 
+    //     {
+    //         store.ExecuteSale(1,1,2,true,true);
+    //         store.ExecuteSale(2,2,5,true,false);
+    //         store.DisplayAll();
+    //         Console.ReadLine();
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine("User not found try again");
+    //     }
+    //     }
     }
 }
 
