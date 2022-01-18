@@ -29,7 +29,7 @@ namespace Database.Shop
             Name = name;
             Phone = phone;
             Address = address;
-            LoyaltyPoint = 460;
+            LoyaltyPoint = 0;
         }
     }
     class ProductDB
