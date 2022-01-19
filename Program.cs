@@ -153,7 +153,7 @@ using Database.Shop;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
         //double TotalPrice;
-        double TotalPrice = product.Quantity * product.Price;
+        //double TotalPrice = product.Quantity * product.Price;
         customer.LoyaltyPoint += product.Price * quantity;
         if (customer.SpendLoyalty == true && customer.LoyaltyPoint > 200)
         {
@@ -245,7 +245,7 @@ class Program
         "Cook 24 street","kadajin@email.com",2);
         store.AddCustomerDB("May Jay","534-643-852",
         "Salmon 24 street","Mayday@email.com",3);
-        store.AddProductDB("Witcher",105,50);
+        store.AddProductDB("Witcher",100,50);
         store.AddProductDB("MW3",80,80);
         store.AddStaff(1,"admin", true);
         while(true)
@@ -255,9 +255,8 @@ class Program
 
             if (login == true) 
             {
-            store.ExecuteSale(1,1,2,true,true);
-            store.ExecuteSale(2,2,1,false,false);
-            store.ExecuteSale(1,1,2,false,true);
+            store.ExecuteSale(1,1,4,true,true);
+            store.ExecuteSale(2,2,3,false,false);
             store.DisplayAll();
             Console.ReadLine();
             break;
