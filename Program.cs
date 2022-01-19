@@ -19,6 +19,7 @@ using Database.Shop;
     class StoreDB
     {
         
+        public int TotalPrice;
         private List<ProductDB> _products;
         private List<CustomerDB> _customers;
         private List<StaffDB> _staffs;
@@ -152,13 +153,12 @@ using Database.Shop;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
-        //double TotalPrice;
-        //double TotalPrice = product.Quantity * product.Price;
+        TotalPrice = product.Price * quantity;
         //customer.LoyaltyPoint += product.Price * quantity;
         if (customer.SpendLoyalty == true && customer.LoyaltyPoint > 200)
         {
             customer.LoyaltyPoint -= 200;
-            //product.Price -= 20;
+            TotalPrice -= 20;
             customer.LoyaltyPoint += product.Price * quantity - 20;
             
         }
@@ -166,10 +166,10 @@ using Database.Shop;
         {
             customer.LoyaltyPoint += product.Price * quantity;
         }
-        // if (customer.Delivery == true)
-        // {
-        //     product.Price += 20;
-        // }
+        if (customer.Delivery == true)
+        {
+            TotalPrice += 20;
+        }
         
     }
 
@@ -258,9 +258,12 @@ class Program
             if (login == true) 
             {
             store.ExecuteSale(1,1,3,true,true);
-            //store.ExecuteSale(2,2,3,false,false);
-            store.ExecuteSale(1,1,1,true,true);
+            Console.WriteLine(store.TotalPrice);
+            // store.ExecuteSale(1,1,1,true,true);
+            // Console.WriteLine(store.TotalPrice);
             store.ExecuteSale(1,2,1,true,true);
+            Console.WriteLine(store.TotalPrice);
+            
             store.DisplayAll();
             Console.ReadLine();
             break;
