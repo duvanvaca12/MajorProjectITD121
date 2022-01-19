@@ -83,7 +83,7 @@ using Database.Shop;
         /// <summary>
         /// Get the list of product
         /// </summary>
-        /// <param name="productID">Inpt the number of the projectID</param>
+        /// <param name="productID">Input the number of the projectID</param>
         /// <returns>components of the product's list</returns>
         public ProductDB GetProduct(int productID)
         {
@@ -154,15 +154,19 @@ using Database.Shop;
         product.RemainQuantity -= quantity;
         //double TotalPrice;
         double TotalPrice = product.Quantity * product.Price;
+        customer.LoyaltyPoint += product.Price * quantity;
         if (customer.SpendLoyalty == true && customer.LoyaltyPoint > 200)
         {
             customer.LoyaltyPoint -= 200;
+            product.Price -= 20;
+            //product.Price -= customer.LoyaltyPoint;
             //customer.LoyaltyPoint -= product.Price * quantity;
+            
         }
-        customer.LoyaltyPoint += product.Price * quantity;
+        //customer.LoyaltyPoint += product.Price * quantity;
         if (customer.Delivery == true)
         {
-            TotalPrice += 20;
+            product.Price += 20;
         }
         
     }
@@ -252,9 +256,10 @@ class Program
             if (login == true) 
             {
             store.ExecuteSale(1,1,2,true,true);
-            //store.ExecuteSale(2,2,1,false,false);
+            store.ExecuteSale(2,2,1,false,false);
             store.ExecuteSale(1,1,2,false,true);
             store.DisplayAll();
+            Console.ReadLine();
             break;
             }
 
