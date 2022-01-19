@@ -152,22 +152,24 @@ using Database.Shop;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
-        //double TotalPrice = product.Quantity * product.Price;
-        customer.LoyaltyPoint += product.Price * quantity;
-        if (customer.SpendLoyalty == true && customer.LoyaltyPoint > 200)
+        int TotalPrice = product.Quantity * product.Price;
+        //customer.LoyaltyPoint += product.Price * quantity;
+        if (customer.SpendLoyalty == true && customer.LoyaltyPoint >= 200)
         {
             customer.LoyaltyPoint -= 200;
-            product.Price -= 20;
-            //product.Price -= customer.LoyaltyPoint;
-            //customer.LoyaltyPoint -= product.Price * quantity;
-            
+            customer.LoyaltyPoint += product.Price * quantity;
+            TotalPrice -= 20;
+            //product.Price -= customer.LoyaltyPoint; 
+        }
+        else
+        {
+            customer.LoyaltyPoint += product.Price * quantity;
         }
         //customer.LoyaltyPoint += product.Price * quantity;
         if (customer.Delivery == true)
         {
-            product.Price += 20;
+            TotalPrice += 20;
         }
-        double TotalPrice = product.Quantity * product.Price;
     }
 
 
@@ -254,8 +256,9 @@ class Program
 
             if (login == true) 
             {
-            store.ExecuteSale(1,1,4,true,true);
-            store.ExecuteSale(2,2,3,false,false);
+            store.ExecuteSale(1,1,3,true,true);
+            store.ExecuteSale(2,2,4,true,true);
+            store.ExecuteSale(1,1,1,true,true);
             store.DisplayAll();
             Console.ReadLine();
             break;
