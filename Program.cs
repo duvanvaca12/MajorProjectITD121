@@ -152,7 +152,6 @@ using Database.Shop;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
-        //double TotalPrice;
         //double TotalPrice = product.Quantity * product.Price;
         customer.LoyaltyPoint += product.Price * quantity;
         if (customer.SpendLoyalty == true && customer.LoyaltyPoint > 200)
@@ -168,7 +167,7 @@ using Database.Shop;
         {
             product.Price += 20;
         }
-        
+        double TotalPrice = product.Quantity * product.Price;
     }
 
 
