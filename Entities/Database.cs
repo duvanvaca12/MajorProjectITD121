@@ -4,27 +4,30 @@ namespace Database.Shop
 {
     public class Sale
     {
-        //public int StaffID { get; set; }
-        public int CustomerID { get; set; }
+        public string CustomerName{ get; set; }
+        public string ProductName { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
         public int TotalPrice { get; set; }
-
         public int SaleLoyalty { get; set; }
+        public int StaffID { get; set; }
 
-        public Sale (int customerID, int productID, int quantity, int totalPrice, 
-        int saleLoyalty)
+        public Sale (string customerName, string productName, int productID, int quantity, int totalPrice, 
+        int saleLoyalty, int staffID)
         {
-            CustomerID = customerID;
+            CustomerName = customerName; 
+            ProductName = productName;
             ProductID = productID;
             Quantity = quantity;
             TotalPrice = totalPrice;
             SaleLoyalty = saleLoyalty;
+            StaffID = staffID;
 
         }
     }
     public class Staff
     {
+
         public int ID { get; set; }
         public string Password { get; set; }
         public bool Admin { get; set; }
@@ -77,11 +80,11 @@ namespace Database.Shop
     class Store
     {
 
+        public int StaffActive;
         public int TotalPrice;
         private List<Product> _products;
         private List<Customer> _customers;
         private List<Staff> _staffs;
-
         private List<Sale> _sales;
 
         /// <summary>
@@ -128,11 +131,11 @@ namespace Database.Shop
             _customers.Add(newCustomer);
         }
 
-        public void AddSaleDB(int customerID, int ProductID, int quantity,
-        int totalPrice, int saleLoyalty)
+        public void AddSaleDB(string customerName, string productName, int productID, int quantity,
+        int totalPrice, int saleLoyalty, int staffID)
         {
-            Sale newSale = new Sale(customerID,ProductID, quantity, totalPrice, 
-            saleLoyalty);
+            Sale newSale = new Sale(customerName, productName, productID, quantity, totalPrice, 
+            saleLoyalty, staffID);
             _sales.Add(newSale);
         }
 
@@ -176,11 +179,22 @@ namespace Database.Shop
         /// <returns>The array of the list of customer's DB</returns>
         public Customer GetCustomer(int customerID)
         {
-            for (int i = 0; i < _products.Count; i++)
+            for (int i = 0; i < _customers.Count; i++)
             {
                 if (_customers[i].CustomerID == customerID)
                 {
                     return _customers[i];
+                }
+            }
+            return null;
+        }
+        public Staff GetStaff(int staffID)
+        {
+            for (int i = 0; i < _staffs.Count; i++)
+            {
+                if (_staffs[i].ID == staffID)
+                {
+                    return _staffs[i];
                 }
             }
             return null;
@@ -220,6 +234,7 @@ namespace Database.Shop
             
             Customer customer = GetCustomer(customerID);
             Product product = GetProduct(productID);
+            Staff staff = GetStaff(StaffActive);
             customer.SpendLoyalty = spendLoyalty;
             customer.Delivery = delivery;
             product.RemainQuantity -= quantity;
@@ -243,7 +258,8 @@ namespace Database.Shop
             {
                 TotalPrice += 20;
             }
-            AddSaleDB(customerID, productID, quantity, TotalPrice, pointsEarned);
+            AddSaleDB(customer.Name, product.ProductName, productID, quantity, TotalPrice,
+            pointsEarned, staff.ID);
         }
 
 
@@ -256,6 +272,7 @@ namespace Database.Shop
         public bool ValidateLogin(int ID, string password)
         {
             bool state = false;
+            StaffActive = ID;
             Staff User = GetLogin(ID, password);
             if (User != null)
             {
@@ -284,7 +301,8 @@ namespace Database.Shop
             // displays the header row
             printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
             printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
-            printSaleDB.Add(new string[] {"customerID", "productID", "quantity", "TotalPrice", "pointsEarned" });
+            printSaleDB.Add(new string[] {"staffID", "CustomerName", "ProductName","ProductID","Quantity",
+            "TotalPrice","EarnedPoints"});
             
             // add details of all books to the print data
             for (int i = 0; i < _customers.Count; i++)
@@ -307,7 +325,9 @@ namespace Database.Shop
             for (int i = 0; i < _sales.Count; i++)
             {
                 printSaleDB.Add(new string[] {
-                    _sales[i].CustomerID.ToString(),
+                    _sales[i].StaffID.ToString(),
+                    _sales[i].CustomerName,
+                    _sales[i].ProductName,
                     _sales[i].ProductID.ToString(),
                     _sales[i].Quantity.ToString(),
                     _sales[i].TotalPrice.ToString(),
