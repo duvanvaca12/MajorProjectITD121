@@ -38,7 +38,7 @@ namespace Database.Shop
             Admin = admin;
         }
     }
-    class Customer
+    public class Customer
     {
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -58,7 +58,7 @@ namespace Database.Shop
             LoyaltyPoint = 0;
         }
     }
-    class Product
+    public class Product
     {
         public string ProductName { get; set; }
         public int Price { get; set; }
@@ -77,9 +77,8 @@ namespace Database.Shop
 
         }
     }
-    class Store
+    public class Store
     {
-
         public int StaffActive;
         public int TotalPrice;
         private List<Product> _products;
@@ -170,8 +169,6 @@ namespace Database.Shop
             return null;
         }
 
-        
-
         /// <summary>
         /// Get the list of customer
         /// </summary>
@@ -217,9 +214,6 @@ namespace Database.Shop
             }
             return null;
         }
-
-
-
         /// <summary>
         /// Execute the sale process
         /// </summary>
@@ -247,7 +241,6 @@ namespace Database.Shop
                 TotalPrice -= 20;
                 pointsEarned += product.Price * quantity - 20;
                 customer.LoyaltyPoint = pointsEarned;
-
             }
             else
             {

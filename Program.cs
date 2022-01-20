@@ -22,9 +22,10 @@ class Program
 
             if (login == true) 
             {
-            store.ExecuteSale(1,1,3,false,false);
+            store.ExecuteSale(1,1,2,true,false);
+            store.ExecuteSale(1,1,1,true,false);
             store.ExecuteSale(2,2,3,false,false);
-            store.ExecuteSale(2,1,1,true,true);
+            store.ExecuteSale(1,2,1,true,true);
             store.ExecuteSale(1,2,1,true,true);  
             store.DisplayAll();
             Console.ReadLine();
