@@ -308,7 +308,7 @@ namespace Database.Shop
                 printProductDB.Add(new string[] {
                     _products[i].ProductID.ToString(),
                     _products[i].ProductName,
-                    _products[i].Price.ToString(),
+                    _products[i].Price.ToString("C"),
                     _products[i].RemainQuantity.ToString()
                 });
             }
@@ -320,7 +320,7 @@ namespace Database.Shop
                     _sales[i].ProductName,
                     _sales[i].ProductID.ToString(),
                     _sales[i].Quantity.ToString(),
-                    _sales[i].TotalPrice.ToString(),
+                    _sales[i].TotalPrice.ToString("C"),
                     _sales[i].SaleLoyalty.ToString()
                 });
             }
