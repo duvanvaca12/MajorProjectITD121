@@ -9,7 +9,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        StoreDB store = new StoreDB();
+        Store store = new Store();
         store.AddCustomerDB("Ted Lasso","345-656-45",
         "Baker 24 street","tedlasso@email.com",1);
         store.AddCustomerDB("Kada Jin","435-356-455",

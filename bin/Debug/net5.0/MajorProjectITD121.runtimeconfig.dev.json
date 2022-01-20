@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\duvan\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\duvan\\.nuget\\packages"
-    ]
-  }
-=======
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
@@ -14,5 +5,4 @@
       "C:\\Users\\yeoks\\.nuget\\packages"
     ]
   }
->>>>>>> d506a0bef56d68eb054954c301a1ba39380b4e55
 }

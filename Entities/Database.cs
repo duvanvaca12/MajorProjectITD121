@@ -2,8 +2,9 @@ using System.Collections.Generic;
 
 namespace Database.Shop
 {
-    public class SaleDB
+    public class Sale
     {
+        //public int StaffID { get; set; }
         public int CustomerID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
@@ -11,7 +12,7 @@ namespace Database.Shop
 
         public int SaleLoyalty { get; set; }
 
-        public SaleDB (int customerID, int productID, int quantity, int totalPrice, 
+        public Sale (int customerID, int productID, int quantity, int totalPrice, 
         int saleLoyalty)
         {
             CustomerID = customerID;
@@ -22,19 +23,19 @@ namespace Database.Shop
 
         }
     }
-    public class StaffDB
+    public class Staff
     {
         public int ID { get; set; }
         public string Password { get; set; }
         public bool Admin { get; set; }
-        public StaffDB(int id, string password, bool admin)
+        public Staff(int id, string password, bool admin)
         {
             ID = id;
             Password = password;
             Admin = admin;
         }
     }
-    class CustomerDB
+    class Customer
     {
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -44,7 +45,7 @@ namespace Database.Shop
         public int LoyaltyPoint { get; set; }
         public bool SpendLoyalty;
         public bool Delivery;
-        public CustomerDB(string name, string phone,
+        public Customer(string name, string phone,
         string address, string email, int customerID)
         {
             CustomerID = customerID;
@@ -54,7 +55,7 @@ namespace Database.Shop
             LoyaltyPoint = 0;
         }
     }
-    class ProductDB
+    class Product
     {
         public string ProductName { get; set; }
         public int Price { get; set; }
@@ -63,7 +64,7 @@ namespace Database.Shop
         public int ProductID = 0;
         private static int _numProducts = 0;
 
-        public ProductDB(string productName, int price, int quantity)
+        public Product(string productName, int price, int quantity)
         {
             _numProducts += 1;
             ProductID = _numProducts;
@@ -73,25 +74,25 @@ namespace Database.Shop
 
         }
     }
-    class StoreDB
+    class Store
     {
 
         public int TotalPrice;
-        private List<ProductDB> _products;
-        private List<CustomerDB> _customers;
-        private List<StaffDB> _staffs;
+        private List<Product> _products;
+        private List<Customer> _customers;
+        private List<Staff> _staffs;
 
-        private List<SaleDB> _sales;
+        private List<Sale> _sales;
 
         /// <summary>
         /// Make empty lists of the products,staff,customer database
         /// </summary>
-        public StoreDB()
+        public Store()
         {
-            _products = new List<ProductDB>();
-            _customers = new List<CustomerDB>();
-            _staffs = new List<StaffDB>();
-            _sales = new List<SaleDB>();
+            _products = new List<Product>();
+            _customers = new List<Customer>();
+            _staffs = new List<Staff>();
+            _sales = new List<Sale>();
         }
 
 
@@ -103,7 +104,7 @@ namespace Database.Shop
         /// <param name="admin">The password that matches staff's password</param>
         public void AddStaff(int id, string password, bool admin)
         {
-            StaffDB newstaff = new StaffDB(id, password, admin);
+            Staff newstaff = new Staff(id, password, admin);
             if (admin == true)
             {
                 _staffs.Add(newstaff);
@@ -122,7 +123,7 @@ namespace Database.Shop
         public void AddCustomerDB(string name, string phone, string address,
         string email, int customerID)
         {
-            CustomerDB newCustomer = new CustomerDB(name, phone, address,
+            Customer newCustomer = new Customer(name, phone, address,
             email, customerID);
             _customers.Add(newCustomer);
         }
@@ -130,7 +131,7 @@ namespace Database.Shop
         public void AddSaleDB(int customerID, int ProductID, int quantity,
         int totalPrice, int saleLoyalty)
         {
-            SaleDB newSale = new SaleDB(customerID,ProductID, quantity, totalPrice, 
+            Sale newSale = new Sale(customerID,ProductID, quantity, totalPrice, 
             saleLoyalty);
             _sales.Add(newSale);
         }
@@ -144,7 +145,7 @@ namespace Database.Shop
         /// <param name="quantity">Input the stock of the product</param>
         public void AddProductDB(string productName, int price, int quantity)
         {
-            ProductDB newProduct = new ProductDB(productName, price, quantity);
+            Product newProduct = new Product(productName, price, quantity);
             _products.Add(newProduct);
         }
 
@@ -154,7 +155,7 @@ namespace Database.Shop
         /// </summary>
         /// <param name="productID">Input the number of the projectID</param>
         /// <returns>components of the product's list</returns>
-        public ProductDB GetProduct(int productID)
+        public Product GetProduct(int productID)
         {
             for (int i = 0; i < _products.Count; i++)
             {
@@ -166,13 +167,14 @@ namespace Database.Shop
             return null;
         }
 
+        
 
         /// <summary>
         /// Get the list of customer
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns>The array of the list of customer's DB</returns>
-        public CustomerDB GetCustomer(int customerID)
+        public Customer GetCustomer(int customerID)
         {
             for (int i = 0; i < _products.Count; i++)
             {
@@ -190,7 +192,7 @@ namespace Database.Shop
         /// <param name="Username">Input the number of staff</param>
         /// <param name="Password">Input the string password of staff</param>
         /// <returns>The database components of staff list</returns>
-        public StaffDB GetLogin(int Username, string Password)
+        public Staff GetLogin(int Username, string Password)
         {
             for (int i = 0; i < _staffs.Count; i++)
             {
@@ -216,8 +218,8 @@ namespace Database.Shop
         bool spendLoyalty, bool delivery)
         {
             
-            CustomerDB customer = GetCustomer(customerID);
-            ProductDB product = GetProduct(productID);
+            Customer customer = GetCustomer(customerID);
+            Product product = GetProduct(productID);
             customer.SpendLoyalty = spendLoyalty;
             customer.Delivery = delivery;
             product.RemainQuantity -= quantity;
@@ -254,7 +256,7 @@ namespace Database.Shop
         public bool ValidateLogin(int ID, string password)
         {
             bool state = false;
-            StaffDB User = GetLogin(ID, password);
+            Staff User = GetLogin(ID, password);
             if (User != null)
             {
                 if (User.ID == ID && User.Password == password)
@@ -271,16 +273,19 @@ namespace Database.Shop
 
 
         /// <summary>
-        /// Displays the list of all databases bt table
+        /// Displays the list of all databases by table
         /// </summary>
         public void DisplayAll()
         {
             List<string[]> printCustomerDB = new List<string[]>();
             List<string[]> printProductDB = new List<string[]>();
+            List<string[]> printSaleDB = new List<string[]>();
+
             // displays the header row
             printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
             printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
-
+            printSaleDB.Add(new string[] {"customerID", "productID", "quantity", "TotalPrice", "pointsEarned" });
+            
             // add details of all books to the print data
             for (int i = 0; i < _customers.Count; i++)
             {
@@ -299,8 +304,20 @@ namespace Database.Shop
                     _products[i].RemainQuantity.ToString()
                 });
             }
+            for (int i = 0; i < _sales.Count; i++)
+            {
+                printSaleDB.Add(new string[] {
+                    _sales[i].CustomerID.ToString(),
+                    _sales[i].ProductID.ToString(),
+                    _sales[i].Quantity.ToString(),
+                    _sales[i].TotalPrice.ToString(),
+                    _sales[i].SaleLoyalty.ToString()
+                });
+            }
             Utility.PrintTable(printCustomerDB);
             Utility.PrintTable(printProductDB);
+            Utility.PrintTable(printSaleDB);
+
 
         }
     }

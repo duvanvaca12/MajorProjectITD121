@@ -1,18 +1,15 @@
-<<<<<<< HEAD
-{
-  "version": 2,
-  "dgSpecHash": "HyDr7POI3aYPWav5VTFydq98p4ka3TW5briTLxQIBFt9YbEL6L8ANdLtJpfxQa51z4gcNXvvLkbOoGCUC0th7g==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\duvan\\Desktop\\MajorProjectITD121\\MajorProjectITD121.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
-=======
 {
   "version": 2,
   "dgSpecHash": "fOuSnX6Is+qn+an7U/hUw91uTWJWI79GQxMULj2NMeCC+jNeaJsn/zkcZEjmnznIA98ZDazvrGWI7tYQkRmj2w==",
   "success": true,
   "projectFilePath": "C:\\Users\\C#\\MajorProjectITD121\\MajorProjectITD121.csproj",
   "expectedPackageFiles": [],
-  "logs": []
->>>>>>> d506a0bef56d68eb054954c301a1ba39380b4e55
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "캐시 파일 C:\\Users\\C#\\MajorProjectITD121\\obj\\project.nuget.cache을(를) 읽는 동안 문제가 발생했습니다. Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
+    }
+  ]
 }
