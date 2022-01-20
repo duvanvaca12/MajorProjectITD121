@@ -8,19 +8,19 @@
     "net5.0": []
   },
   "packageFolders": {
-    "/home/cesar/.nuget/packages/": {}
+    "C:\\Users\\duvan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/cesar/Documents/MajorProjectITD121/MajorProjectITD121.csproj",
+      "projectUniqueName": "c:\\Users\\duvan\\Desktop\\MajorProjectITD121\\MajorProjectITD121.csproj",
       "projectName": "MajorProjectITD121",
-      "projectPath": "/home/cesar/Documents/MajorProjectITD121/MajorProjectITD121.csproj",
-      "packagesPath": "/home/cesar/.nuget/packages/",
-      "outputPath": "/home/cesar/Documents/MajorProjectITD121/obj/",
+      "projectPath": "c:\\Users\\duvan\\Desktop\\MajorProjectITD121\\MajorProjectITD121.csproj",
+      "packagesPath": "C:\\Users\\duvan\\.nuget\\packages\\",
+      "outputPath": "c:\\Users\\duvan\\Desktop\\MajorProjectITD121\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/cesar/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\duvan\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -58,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.404/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
