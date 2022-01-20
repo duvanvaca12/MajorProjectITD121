@@ -31,6 +31,12 @@ namespace Database.Shop
         public int ID { get; set; }
         public string Password { get; set; }
         public bool Admin { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="password"></param>
+        /// <param name="admin"></param>
         public Staff(int id, string password, bool admin)
         {
             ID = id;
@@ -38,8 +44,12 @@ namespace Database.Shop
             Admin = admin;
         }
     }
-    public class Customer
+    class Customer
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
@@ -48,6 +58,14 @@ namespace Database.Shop
         public int LoyaltyPoint { get; set; }
         public bool SpendLoyalty;
         public bool Delivery;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
+        /// <param name="address"></param>
+        /// <param name="email"></param>
+        /// <param name="customerID"></param>
         public Customer(string name, string phone,
         string address, string email, int customerID)
         {
@@ -58,8 +76,12 @@ namespace Database.Shop
             LoyaltyPoint = 0;
         }
     }
-    public class Product
+    class Product
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
         public string ProductName { get; set; }
         public int Price { get; set; }
         public int RemainQuantity { get; set; }
@@ -67,6 +89,12 @@ namespace Database.Shop
         public int ProductID = 0;
         private static int _numProducts = 0;
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="productName"></param>
+/// <param name="price"></param>
+/// <param name="quantity"></param>
         public Product(string productName, int price, int quantity)
         {
             _numProducts += 1;
@@ -77,7 +105,11 @@ namespace Database.Shop
 
         }
     }
-    public class Store
+
+    /// <summary>
+    /// 
+    /// </summary>
+    class Store
     {
         public int StaffActive;
         public int TotalPrice;
@@ -169,6 +201,8 @@ namespace Database.Shop
             return null;
         }
 
+        
+
         /// <summary>
         /// Get the list of customer
         /// </summary>
@@ -214,6 +248,9 @@ namespace Database.Shop
             }
             return null;
         }
+
+
+
         /// <summary>
         /// Execute the sale process
         /// </summary>
@@ -241,6 +278,7 @@ namespace Database.Shop
                 TotalPrice -= 20;
                 pointsEarned += product.Price * quantity - 20;
                 customer.LoyaltyPoint = pointsEarned;
+
             }
             else
             {
@@ -254,6 +292,8 @@ namespace Database.Shop
             AddSaleDB(customer.Name, product.ProductName, productID, quantity, TotalPrice,
             pointsEarned, staff.ID);
         }
+
+
         /// <summary>
         /// Login system that refuses access if ID or password is unmatched
         /// </summary>
@@ -279,6 +319,7 @@ namespace Database.Shop
             return state;
         }
 
+
         /// <summary>
         /// Displays the list of all databases by table
         /// </summary>
@@ -291,8 +332,8 @@ namespace Database.Shop
             // displays the header row
             printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
             printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
-            printSaleDB.Add(new string[] {"Staff ID", "Customer Name", "Product Name","Product ID","Quantity",
-            "Total Price","Loyalty Points Earned"});
+            printSaleDB.Add(new string[] {"staffID", "CustomerName", "ProductName","ProductID","Quantity",
+            "TotalPrice","EarnedPoints"});
             
             // add details of all books to the print data
             for (int i = 0; i < _customers.Count; i++)
@@ -327,6 +368,8 @@ namespace Database.Shop
             Utility.PrintTable(printCustomerDB);
             Utility.PrintTable(printProductDB);
             Utility.PrintTable(printSaleDB);
+
+
         }
     }
 }
