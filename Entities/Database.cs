@@ -1,5 +1,22 @@
 namespace Database.Shop
-{    
+{   
+   class Sale
+    {
+        public bool Delivery {get; set;}
+        public bool SpendLoyalty {get; set;}
+        public int Stock{get; set;}
+
+        public Sale(bool delivery,bool spendLoyalty)
+        {
+            Delivery = delivery;
+            SpendLoyalty = spendLoyalty;
+        }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class StaffDB
     {
         public int ID {get;set; }

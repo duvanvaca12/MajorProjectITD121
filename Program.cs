@@ -2,23 +2,17 @@
 using System.Collections.Generic;
 using Database.Shop;
     
-    //class Sale
-    //{
-    //    public bool Delivery {get; set;}
-    //    public bool SpendLoyalty {get; set;}
-    //    public int Stock{get; set;}
-
-    //    public Sale(bool delivery,bool spendLoyalty)
-    //    {
-    //        Delivery = delivery;
-    //        SpendLoyalty = spendLoyalty;
-    //    }
-    //}
+    
 
 // Put this methods on different classes and then assign to the Entities folder
+
+/// <summary>
+/// The shop that contains Lists of databases and make them display by table
+/// </summary>
     class StoreDB
     {
         
+        public int TotalPrice;
         private List<ProductDB> _products;
         private List<CustomerDB> _customers;
         private List<StaffDB> _staffs;
@@ -152,24 +146,24 @@ using Database.Shop;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
-        int TotalPrice = product.Quantity * product.Price;
+        TotalPrice = product.Quantity * product.Price;
         //customer.LoyaltyPoint += product.Price * quantity;
+        if (customer.Delivery == true)
+        {
+            TotalPrice += 20;
+        }
         if (customer.SpendLoyalty == true && customer.LoyaltyPoint >= 200)
         {
             customer.LoyaltyPoint -= 200;
-            customer.LoyaltyPoint += product.Price * quantity;
             TotalPrice -= 20;
+            customer.LoyaltyPoint += TotalPrice;
             //product.Price -= customer.LoyaltyPoint; 
         }
         else
         {
             customer.LoyaltyPoint += product.Price * quantity;
         }
-        //customer.LoyaltyPoint += product.Price * quantity;
-        if (customer.Delivery == true)
-        {
-            TotalPrice += 20;
-        }
+        
     }
 
 
@@ -199,7 +193,7 @@ using Database.Shop;
 
 
     /// <summary>
-    /// Displays the list of all databases bt table
+    /// Displays the list of all databases by table
     /// </summary>
     public void DisplayAll()
         {
@@ -234,6 +228,9 @@ using Database.Shop;
     
 }
 
+/// <summary>
+/// 
+/// </summary>
 class Program
 {
     static void Main(string[] args)
@@ -257,8 +254,13 @@ class Program
             if (login == true) 
             {
             store.ExecuteSale(1,1,3,true,true);
-            store.ExecuteSale(2,2,4,true,true);
-            store.ExecuteSale(1,1,1,true,true);
+            Console.WriteLine(store.TotalPrice);
+            store.ExecuteSale(2,2,3,true,true);
+            store.ExecuteSale(2,1,1,true,true);
+            // Console.WriteLine(store.TotalPrice);
+            store.ExecuteSale(1,2,1,true,true);
+            Console.WriteLine(store.TotalPrice);
+            
             store.DisplayAll();
             Console.ReadLine();
             break;
