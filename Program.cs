@@ -3,6 +3,11 @@ using Database.Shop;
 
 class Program
 {
+    /// <summary>
+    /// Add Customers,Products and Staff members into the database. Also executes
+    /// the sales.
+    /// </summary>
+    /// <param name="args"></param>
     static void Main(string[] args)
     {
         Store store = new Store();
@@ -17,9 +22,7 @@ class Program
         store.AddStaff(1,"admin", true);
         while(true)
         {
-
             var login = store.ValidateLogin(1, "admin");
-
             if (login == true) 
             {
             store.ExecuteSale(1,1,2,true,false);
@@ -31,7 +34,6 @@ class Program
             Console.ReadLine();
             break;
             }
-
         }
     }
 }

@@ -15,13 +15,13 @@ namespace Database.Shop
         public int TotalPrice { get; set; }
         public int SaleLoyalty { get; set; }
         public int StaffID { get; set; }
-       
+
        /// <summary>
-       /// Initialise sale's data members
+       /// Initialize sale's data members
        /// </summary>
        /// <param name="customerName">String name of the customer who purchased product </param>
-       /// <param name="productName">String name of the product which purchsed by customer</param>
-       /// <param name="productID">Integer ID of the product which purchsed by customer</param>
+       /// <param name="productName">String name of the product which purchased by customer</param>
+       /// <param name="productID">Integer ID of the product which purchased by customer</param>
        /// <param name="quantity">Quantity of the products that customer purchased</param>
        /// <param name="totalPrice">product.Price * quantity</param>
        /// <param name="saleLoyalty">The earned loyalty points for products</param>
@@ -49,7 +49,7 @@ namespace Database.Shop
         public string Password { get; set; }
         public bool Admin { get; set; }
         /// <summary>
-        /// Initialise staff's data members
+        /// Initialize staff's data members
         /// </summary>
         /// <param name="id"></param>
         /// <param name="password"></param>
@@ -77,7 +77,7 @@ namespace Database.Shop
         public bool SpendLoyalty {get; set; }
         public bool Delivery{get; set; }
         /// <summary>
-        /// Initialise customer's data members
+        /// Initialize customer's data members
         /// </summary>
         /// <param name="name">String name of the customer</param>
         /// <param name="phone">Phone number of the customer</param>
@@ -111,7 +111,7 @@ namespace Database.Shop
         private static int _numProducts = 0;
 
 /// <summary>
-/// Initialise product's data members
+/// Initialize product's data members
 /// </summary>
 /// <param name="productName">String name of the product</param>
 /// <param name="price">Integer price of the product</param>
@@ -190,8 +190,8 @@ namespace Database.Shop
         /// Add new sale process data to the database of sale
         /// </summary>
         /// <param name="customerName">String name of the customer who purchased product</param>
-        /// <param name="productName">String name of the product which purchsed by customer</param>
-        /// <param name="productID">Integer ID of the product which purchsed by customer</param>
+        /// <param name="productName">String name of the product which purchased by customer</param>
+        /// <param name="productID">Integer ID of the product which purchased by customer</param>
         /// <param name="quantity">Quantity of the products that customer purchased</param>
         /// <param name="totalPrice">product.Price * quantity</param>
         /// <param name="saleLoyalty">The earned loyalty points for products</param>
@@ -290,8 +290,6 @@ namespace Database.Shop
             }
             return null;
         }
-
-
 
         /// <summary>
         /// Execute the sale process
