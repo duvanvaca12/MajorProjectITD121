@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fOuSnX6Is+qn+an7U/hUw91uTWJWI79GQxMULj2NMeCC+jNeaJsn/zkcZEjmnznIA98ZDazvrGWI7tYQkRmj2w==",
+  "dgSpecHash": "gLplJD3lUUQl5Qco1PYw37/nMmOws5yNCtLkkJNve/+8BM0i3T3RvmFc0WZnYaelahdBvOpSslG3UeNW7OusMA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\C#\\MajorProjectITD121\\MajorProjectITD121.csproj",
+  "projectFilePath": "/home/cesar/Documents/MajorProjectITD121/MajorProjectITD121.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "캐시 파일 C:\\Users\\C#\\MajorProjectITD121\\obj\\project.nuget.cache을(를) 읽는 동안 문제가 발생했습니다. Invalid property identifier character: <. Path 'expectedPackageFiles', line 7, position 0."
-    }
-  ]
+  "logs": []
 }
