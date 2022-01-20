@@ -2,39 +2,43 @@ using System.Collections.Generic;
 
 namespace Database.Shop
 {
-    public class SaleDB
+    public class Sale
     {
-        public int CustomerID { get; set; }
+        public string CustomerName{ get; set; }
+        public string ProductName { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
         public int TotalPrice { get; set; }
-
         public int SaleLoyalty { get; set; }
+        public int StaffID { get; set; }
 
-        public SaleDB (int customerID, int productID, int quantity, int totalPrice, 
-        int saleLoyalty)
+        public Sale (string customerName, string productName, int productID, int quantity, int totalPrice, 
+        int saleLoyalty, int staffID)
         {
-            CustomerID = customerID;
+            CustomerName = customerName; 
+            ProductName = productName;
             ProductID = productID;
             Quantity = quantity;
             TotalPrice = totalPrice;
             SaleLoyalty = saleLoyalty;
+            StaffID = staffID;
 
         }
     }
-    public class StaffDB
+    public class Staff
     {
+
         public int ID { get; set; }
         public string Password { get; set; }
         public bool Admin { get; set; }
-        public StaffDB(int id, string password, bool admin)
+        public Staff(int id, string password, bool admin)
         {
             ID = id;
             Password = password;
             Admin = admin;
         }
     }
-    class CustomerDB
+    class Customer
     {
         public string Name { get; set; }
         public string Phone { get; set; }
@@ -44,7 +48,7 @@ namespace Database.Shop
         public int LoyaltyPoint { get; set; }
         public bool SpendLoyalty;
         public bool Delivery;
-        public CustomerDB(string name, string phone,
+        public Customer(string name, string phone,
         string address, string email, int customerID)
         {
             CustomerID = customerID;
@@ -76,12 +80,12 @@ namespace Database.Shop
     class StoreDB
     {
 
+        public int StaffActive;
         public int TotalPrice;
         private List<ProductDB> _products;
-        private List<CustomerDB> _customers;
-        private List<StaffDB> _staffs;
-
-        private List<SaleDB> _sales;
+        private List<Customer> _customers;
+        private List<Staff> _staffs;
+        private List<Sale> _sales;
 
         /// <summary>
         /// Make empty lists of the products,staff,customer database
@@ -89,9 +93,9 @@ namespace Database.Shop
         public StoreDB()
         {
             _products = new List<ProductDB>();
-            _customers = new List<CustomerDB>();
-            _staffs = new List<StaffDB>();
-            _sales = new List<SaleDB>();
+            _customers = new List<Customer>();
+            _staffs = new List<Staff>();
+            _sales = new List<Sale>();
         }
 
 
@@ -103,7 +107,7 @@ namespace Database.Shop
         /// <param name="admin">The password that matches staff's password</param>
         public void AddStaff(int id, string password, bool admin)
         {
-            StaffDB newstaff = new StaffDB(id, password, admin);
+            Staff newstaff = new Staff(id, password, admin);
             if (admin == true)
             {
                 _staffs.Add(newstaff);
@@ -122,16 +126,16 @@ namespace Database.Shop
         public void AddCustomerDB(string name, string phone, string address,
         string email, int customerID)
         {
-            CustomerDB newCustomer = new CustomerDB(name, phone, address,
+            Customer newCustomer = new Customer(name, phone, address,
             email, customerID);
             _customers.Add(newCustomer);
         }
 
-        public void AddSaleDB(int customerID, int ProductID, int quantity,
-        int totalPrice, int saleLoyalty)
+        public void AddSaleDB(string customerName, string productName, int productID, int quantity,
+        int totalPrice, int saleLoyalty, int staffID)
         {
-            SaleDB newSale = new SaleDB(customerID,ProductID, quantity, totalPrice, 
-            saleLoyalty);
+            Sale newSale = new Sale(customerName, productName, productID, quantity, totalPrice, 
+            saleLoyalty, staffID);
             _sales.Add(newSale);
         }
 
@@ -172,13 +176,24 @@ namespace Database.Shop
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns>The array of the list of customer's DB</returns>
-        public CustomerDB GetCustomer(int customerID)
+        public Customer GetCustomer(int customerID)
         {
-            for (int i = 0; i < _products.Count; i++)
+            for (int i = 0; i < _customers.Count; i++)
             {
                 if (_customers[i].CustomerID == customerID)
                 {
                     return _customers[i];
+                }
+            }
+            return null;
+        }
+        public Staff GetStaff(int staffID)
+        {
+            for (int i = 0; i < _staffs.Count; i++)
+            {
+                if (_staffs[i].ID == staffID)
+                {
+                    return _staffs[i];
                 }
             }
             return null;
@@ -190,7 +205,7 @@ namespace Database.Shop
         /// <param name="Username">Input the number of staff</param>
         /// <param name="Password">Input the string password of staff</param>
         /// <returns>The database components of staff list</returns>
-        public StaffDB GetLogin(int Username, string Password)
+        public Staff GetLogin(int Username, string Password)
         {
             for (int i = 0; i < _staffs.Count; i++)
             {
@@ -216,8 +231,9 @@ namespace Database.Shop
         bool spendLoyalty, bool delivery)
         {
             
-            CustomerDB customer = GetCustomer(customerID);
+            Customer customer = GetCustomer(customerID);
             ProductDB product = GetProduct(productID);
+            Staff staff = GetStaff(StaffActive);
             customer.SpendLoyalty = spendLoyalty;
             customer.Delivery = delivery;
             product.RemainQuantity -= quantity;
@@ -241,7 +257,8 @@ namespace Database.Shop
             {
                 TotalPrice += 20;
             }
-            AddSaleDB(customerID, productID, quantity, TotalPrice, pointsEarned);
+            AddSaleDB(customer.Name, product.ProductName, productID, quantity, TotalPrice,
+            pointsEarned, staff.ID);
         }
 
 
@@ -254,7 +271,8 @@ namespace Database.Shop
         public bool ValidateLogin(int ID, string password)
         {
             bool state = false;
-            StaffDB User = GetLogin(ID, password);
+            StaffActive = ID;
+            Staff User = GetLogin(ID, password);
             if (User != null)
             {
                 if (User.ID == ID && User.Password == password)
