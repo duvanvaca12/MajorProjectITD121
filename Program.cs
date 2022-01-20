@@ -146,7 +146,7 @@ using Database.Shop;
         customer.SpendLoyalty = spendLoyalty;
         customer.Delivery = delivery;
         product.RemainQuantity -= quantity;
-        TotalPrice = product.Quantity * product.Price;
+        TotalPrice = quantity * product.Price;
         //customer.LoyaltyPoint += product.Price * quantity;
         if (customer.Delivery == true)
         {
@@ -161,7 +161,7 @@ using Database.Shop;
         }
         else
         {
-            customer.LoyaltyPoint += product.Price * quantity;
+            customer.LoyaltyPoint += TotalPrice;
         }
         
     }
@@ -253,9 +253,9 @@ class Program
 
             if (login == true) 
             {
-            store.ExecuteSale(1,1,3,true,true);
+            store.ExecuteSale(1,1,3,false,false);
             Console.WriteLine(store.TotalPrice);
-            store.ExecuteSale(2,2,3,true,true);
+            store.ExecuteSale(2,2,3,false,false);
             store.ExecuteSale(2,1,1,true,true);
             // Console.WriteLine(store.TotalPrice);
             store.ExecuteSale(1,2,1,true,true);
