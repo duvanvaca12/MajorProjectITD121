@@ -254,8 +254,6 @@ namespace Database.Shop
             AddSaleDB(customer.Name, product.ProductName, productID, quantity, TotalPrice,
             pointsEarned, staff.ID);
         }
-
-
         /// <summary>
         /// Login system that refuses access if ID or password is unmatched
         /// </summary>
@@ -281,7 +279,6 @@ namespace Database.Shop
             return state;
         }
 
-
         /// <summary>
         /// Displays the list of all databases by table
         /// </summary>
@@ -294,8 +291,8 @@ namespace Database.Shop
             // displays the header row
             printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
             printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
-            printSaleDB.Add(new string[] {"staffID", "CustomerName", "ProductName","ProductID","Quantity",
-            "TotalPrice","EarnedPoints"});
+            printSaleDB.Add(new string[] {"Staff ID", "Customer Name", "Product Name","Product ID","Quantity",
+            "Total Price","Loyalty Points Earned"});
             
             // add details of all books to the print data
             for (int i = 0; i < _customers.Count; i++)
@@ -330,8 +327,6 @@ namespace Database.Shop
             Utility.PrintTable(printCustomerDB);
             Utility.PrintTable(printProductDB);
             Utility.PrintTable(printSaleDB);
-
-
         }
     }
 }
