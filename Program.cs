@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using Database.Shop;
 
+/// <summary>
+/// 
+/// </summary>
 class Program
 {
     static void Main(string[] args)
@@ -23,8 +26,10 @@ class Program
 
             if (login == true) 
             {
-            store.ExecuteSale(1,1,7,true,true);
-            store.ExecuteSale(1,1,1,true,true);
+            store.ExecuteSale(1,1,3,false,false);
+            Console.WriteLine(store.TotalPrice);
+            store.ExecuteSale(2,2,3,false,false);
+            store.ExecuteSale(2,1,1,true,true);
             // Console.WriteLine(store.TotalPrice);
             store.ExecuteSale(1,2,1,true,true);  
             store.DisplayAll();
