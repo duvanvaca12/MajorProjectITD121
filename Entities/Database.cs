@@ -47,6 +47,7 @@ namespace Database.Shop
 
         public int ID { get; set; }
         public string Password { get; set; }
+        public string Name {get;set; }
         public bool Admin { get; set; }
         /// <summary>
         /// Initialize staff's data members
@@ -363,35 +364,11 @@ namespace Database.Shop
         /// <summary>
         /// Displays the list of all databases by table
         /// </summary>
-        public void DisplayAll()
+        public void DisplaySale()
         {
-            List<string[]> printCustomerDB = new List<string[]>();
-            List<string[]> printProductDB = new List<string[]>();
             List<string[]> printSaleDB = new List<string[]>();
-
-            printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
-            printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
             printSaleDB.Add(new string[] {"staffID", "CustomerName", "ProductName","ProductID","Quantity",
             "TotalPrice","EarnedPoints"});
-            
-            // add details of all books to the print data
-            for (int i = 0; i < _customers.Count; i++)
-            {
-                printCustomerDB.Add(new string[] {
-                    _customers[i].CustomerID.ToString(),
-                    _customers[i].Name,
-                    _customers[i].LoyaltyPoint.ToString()
-                });
-            }
-            for (int i = 0; i < _products.Count; i++)
-            {
-                printProductDB.Add(new string[] {
-                    _products[i].ProductID.ToString(),
-                    _products[i].ProductName,
-                    _products[i].Price.ToString("C"),
-                    _products[i].RemainQuantity.ToString()
-                });
-            }
             for (int i = 0; i < _sales.Count; i++)
             {
                 printSaleDB.Add(new string[] {
@@ -404,11 +381,55 @@ namespace Database.Shop
                     _sales[i].SaleLoyalty.ToString()
                 });
             }
+        }
+
+        public void DisplayStaffDB()
+        {
+            List<string[]> printStaffDB = new List<string[]>();
+            printStaffDB.Add(new string[] {"staffID", "StaffName", "Admin"});
+            // add details of all books to the print data
+            for (int i = 0; i < _sales.Count; i++)
+            {
+                printStaffDB.Add(new string[] {
+                    _staffs[i].ID.ToString(),
+                    _staffs[i].Name,
+                    _staffs[i].Admin.ToString()
+                });
+            }
+            Utility.PrintTable(printStaffDB);
+        }
+        public void DisplayCustomerDB()
+        {
+            List<string[]> printCustomerDB = new List<string[]>();
+
+            printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
+            // add details of all books to the print data
+            for (int i = 0; i < _customers.Count; i++)
+            {
+                printCustomerDB.Add(new string[] {
+                    _customers[i].CustomerID.ToString(),
+                    _customers[i].Name,
+                    _customers[i].LoyaltyPoint.ToString()
+                });
+            }    
             Utility.PrintTable(printCustomerDB);
+        }
+        public void DisplayProductDB()
+        {
+            List<string[]> printProductDB = new List<string[]>();
+      
+            printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
+            // add details of all books to the print data
+            for (int i = 0; i < _products.Count; i++)
+            {
+                printProductDB.Add(new string[] {
+                    _products[i].ProductID.ToString(),
+                    _products[i].ProductName,
+                    _products[i].Price.ToString("C"),
+                    _products[i].RemainQuantity.ToString()
+                });
+            }
             Utility.PrintTable(printProductDB);
-            Utility.PrintTable(printSaleDB);
-
-
         }
     }
 }
