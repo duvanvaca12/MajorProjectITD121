@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\duvan\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\duvan\\.nuget\\packages"
+      "C:\\Users\\yeoks\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\yeoks\\.nuget\\packages"
     ]
   }
 }
