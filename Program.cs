@@ -48,6 +48,8 @@ class Program
 
     static bool Login()
     {
+        bool validID = false;
+        bool validPass = false;
         Console.Clear();
         Store store = new Store();
         Staff staff = new Staff(1,"admin",true);
@@ -55,9 +57,23 @@ class Program
         //const string PASS = "admin";
         int USER = staff.ID;
         string PASS = staff.Password;
+        int userID;
+        string password;
         
-        int userID = int.Parse(Input.GetFieldInt("UserID", min: 0));
-        string password = Input.GetFieldPassword("Password");
+        do{
+          Console.Clear();
+          try {userID = int.Parse(Input.GetFieldInt("UserID", min: 0));}
+          catch (FormatException)
+          {Console.WriteLine("ID must be an integer");
+           return validID;
+          }
+
+          try {password = Input.GetFieldPassword("Password");}
+          catch (FormatException)
+          {return validPass;} 
+        } while(password != PASS);
+         //userID = int.Parse(Input.GetFieldInt("UserID", min: 0));
+         //password = Input.GetFieldPassword("Password");
 
         return userID == USER && password == PASS;
     }
