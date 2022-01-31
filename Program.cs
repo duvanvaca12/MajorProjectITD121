@@ -65,7 +65,7 @@ class Program
             Console.WriteLine("=== Login ===");
             userID = int.Parse(Input.GetFieldInt("Staff ID", 1, 100, true));
             password = Input.GetFieldPassword("Password");
-        } while (store.ValidateLogin(userID, password));
+        } while (password != PASS);
 
         return userID == USER && password == PASS;
     }
