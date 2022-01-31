@@ -49,6 +49,7 @@ namespace Database.Shop
         public string Password { get; set; }
         public string Name {get;set; }
         public bool Admin { get; set; }
+        
         /// <summary>
         /// Initialize staff's data members
         /// </summary>

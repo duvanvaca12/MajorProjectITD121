@@ -5,8 +5,8 @@ class Program
 {
     static void Main(string[] args)
     {
-      Store store = new Store();
-      if (Login())
+        Store store = new Store();
+        if (Login())
         {
             bool exit = false;
             // program repeats until exit is true
@@ -52,38 +52,30 @@ class Program
         bool validPass = false;
         Console.Clear();
         Store store = new Store();
-        Staff staff = new Staff(1,"admin",true);
+        Staff staff = new Staff(1, "admin", true);
         //const string USER = "admin";
         //const string PASS = "admin";
         int USER = staff.ID;
         string PASS = staff.Password;
         int userID;
         string password;
-        
-        do{
-          Console.Clear();
-          try {userID = int.Parse(Input.GetFieldInt("UserID", min: 0));}
-          catch (FormatException)
-          {Console.WriteLine("ID must be an integer");
-           return validID;
-          }
-
-          try {password = Input.GetFieldPassword("Password");}
-          catch (FormatException)
-          {return validPass;} 
-        } while(password != PASS);
-         //userID = int.Parse(Input.GetFieldInt("UserID", min: 0));
-         //password = Input.GetFieldPassword("Password");
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("=== Login ===");
+            userID = int.Parse(Input.GetFieldInt("Staff ID", 1, 100, true));
+            password = Input.GetFieldPassword("Password");
+        } while (store.ValidateLogin(userID, password));
 
         return userID == USER && password == PASS;
     }
-    
+
     //main menu
     static void GetStaffMenu()
     {
         Console.Clear();
         Console.WriteLine("=== STAFF ===");
-        
+
         string[] staffOptions = new string[] {
                     "Update Password", // 1
                     "Your sales", // 2
@@ -93,40 +85,40 @@ class Program
         string choice = Input.GetFieldOptions(staffOptions, returnOptionName: false);
 
         switch (choice)
-                {
-                    case "1": 
-                    UpdatePass();
-                        break;
-                    case "2": 
-                    Console.WriteLine("2");
-                        break;
-                    case "3": // Enter a date
-                    RegisterStaff();
-                        break;
-                    case "4": // Exit
-                    ViewStaff();
-                        break;
-                }
+        {
+            case "1":
+                UpdatePass();
+                break;
+            case "2":
+                Console.WriteLine("2");
+                break;
+            case "3": // Enter a date
+                RegisterStaff();
+                break;
+            case "4": // Exit
+                ViewStaff();
+                break;
+        }
         //double fahrenheit = double.Parse(Input.GetFieldDouble("Fahrenheit"));
         //double celsius = (fahrenheit - 32.0) * 5.0 / 9.0;
         //Console.WriteLine($"{fahrenheit:F2}°F == {celsius:F2}°C");
 
         Input.GetEnter(); // press ENTER to continue
     }
-    
+
     //staff menu
     static void UpdatePass()
     {
         Console.Clear();
-        Staff staff = new Staff(1,"admin",true);
+        Staff staff = new Staff(1, "admin", true);
         string currentPW = Input.GetFieldSimple("Enter current password");
         currentPW = staff.Password;
         string newPW = Input.GetFieldSimple("Enter new password");
         string confirm = Input.GetFieldSimple("Confirm?");
         if (confirm == "yes")
         {
-           currentPW = newPW;
-           Console.WriteLine("Password Updated!");
+            currentPW = newPW;
+            Console.WriteLine("Password Updated!");
         }
         Input.GetEnter();
     }
@@ -134,25 +126,26 @@ class Program
     {
         Console.Clear();
         Store store = new Store();
-        Staff staff = new Staff(1,"admin",true);
+        Staff staff = new Staff(1, "admin", true);
         bool admin = staff.Admin;
         string name = Input.GetFieldSimple("Enter staff name");
-        string password  = Input.GetFieldPassword("Enter staff password");
+        string password = Input.GetFieldPassword("Enter staff password");
         string confirmAdmin = Input.GetFieldSimple("Confirm Admin? ");
         if (confirmAdmin == "yes")
         {
             admin = true;
-        } else {admin = false;} 
-        
+        }
+        else { admin = false; }
+
         Input.GetEnter();
     }
     static void ViewStaff()
     {
         Console.Clear();
-         Store store = new Store();
-         store.DisplayStaffDB();
-         Input.GetEnter();
-        
+        Store store = new Store();
+        store.DisplayStaffDB();
+        Input.GetEnter();
+
     }
 
     //Main Menu                    
@@ -160,7 +153,7 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== CUSTOMER ===");
-        
+
         string[] CustomerOptions = new string[] {
                     "View Customer", // 1
                     "Add Customer", // 2
@@ -170,30 +163,30 @@ class Program
         string choice = Input.GetFieldOptions(CustomerOptions, returnOptionName: false);
 
         switch (choice)
-                {
-                    case "1": 
-                    DisplayCustomer();
-                        break;
-                    case "2": 
-                    AddCustomer();
-                        break;
-                    case "3": // Enter a date
-                    Console.WriteLine("3");
-                        break;
-                    case "4": // Exit
-                    Console.WriteLine("4");
-                        break;
-                }
+        {
+            case "1":
+                DisplayCustomer();
+                break;
+            case "2":
+                AddCustomer();
+                break;
+            case "3": // Enter a date
+                Console.WriteLine("3");
+                break;
+            case "4": // Exit
+                Console.WriteLine("4");
+                break;
+        }
 
         Input.GetEnter(); // press ENTER to continue
     }
     //customer menu
     static void DisplayCustomer()
     {
-         Console.Clear();
-         Store store = new Store();
-         store.DisplayCustomerDB();
-         Input.GetEnter();
+        Console.Clear();
+        Store store = new Store();
+        store.DisplayCustomerDB();
+        Input.GetEnter();
     }
     //customer menu
     static void AddCustomer()
@@ -207,7 +200,7 @@ class Program
         string address = Input.GetFieldSimple("Enter address");
         string email = Input.GetFieldSimple("Enter email");
         int ID = int.Parse(Input.GetFieldSimple("Enter ID"));
-        store.AddCustomerDB(name,phone,address,email,ID);
+        store.AddCustomerDB(name, phone, address, email, ID);
         Console.WriteLine("Customer info added!");
         Input.GetEnter();
     }
