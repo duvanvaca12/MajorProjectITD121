@@ -21,7 +21,9 @@ class Program
                     "Staff", // 1
                     "Customers", // 2
                     "Products",// 3
-                    "Sales" // 4
+                    "Sales",
+                    "Logout",
+                    "Exit" // 4
                 };
                 string choice = Input.GetFieldOptions(options, returnOptionName: false);
                 // respond to the user's choice
@@ -34,12 +36,20 @@ class Program
                         GetCustomerMenu();
                         break;
                     case "3": // Enter a date
-                        string date = Input.GetFieldDate("Birthday");
-                        Console.WriteLine(date);
-                        Console.WriteLine("You entered " + date);
+                        //string date = Input.GetFieldDate("Birthday");
+                        //Console.WriteLine(date);
+                        //Console.WriteLine("You entered " + date);
+                        GetProductMenu();
                         break;
-                    case "4": // Exit
-                        //exit = true;
+                    case "4":
+                        GetSaleMenu();
+                         //sales
+                         break;
+                    case "5":
+                         //Logout
+                         break;
+                    case "6": // Exit
+                        exit = true;
                         break;
                 }
             }
@@ -181,7 +191,7 @@ class Program
                     Console.WriteLine("3");
                         break;
                     case "4": // Exit
-                    Console.WriteLine("4");
+                    DeleteCustomer();
                         break;
                 }
 
@@ -192,6 +202,16 @@ class Program
     {
          Console.Clear();
          Store store = new Store();
+         string customerName = Input.GetFieldSimple("Enter customer name");
+         string customerPhone = Input.GetFieldSimple("Enter phone number");
+         string customerAddress = Input.GetFieldSimple("Enter address");
+         string customerEmail = Input.GetFieldSimple("Enter email");
+         int ID = int.Parse(Input.GetFieldSimple("Enter ID"));
+         Customer customer = new Customer(customerName,customerPhone,customerAddress,
+        customerEmail,ID);
+        store.AddCustomerDB(customerName,customerPhone,customerAddress,customerEmail,ID);
+        //store.AddCustomerDB("Kada Jin","435-356-455",
+        //"Cook 24 street","kadajin@email.com",2);
          store.DisplayCustomerDB();
          Input.GetEnter();
     }
@@ -202,13 +222,98 @@ class Program
         Store store = new Store();
         /*string name, string phone,
         string address, string email, int customerID*/
-        string name = Input.GetFieldSimple("Enter customer name");
-        string phone = Input.GetFieldSimple("Enter phone number");
-        string address = Input.GetFieldSimple("Enter address");
-        string email = Input.GetFieldSimple("Enter email");
+        string customerName = Input.GetFieldSimple("Enter customer name");
+        string customerPhone = Input.GetFieldSimple("Enter phone number");
+        string customerAddress = Input.GetFieldSimple("Enter address");
+        string customerEmail = Input.GetFieldSimple("Enter email");
         int ID = int.Parse(Input.GetFieldSimple("Enter ID"));
-        store.AddCustomerDB(name,phone,address,email,ID);
+        Customer customer = new Customer(customerName,customerPhone,customerAddress,
+        customerEmail,ID);
+        customerName = customer.Name;
+        customerPhone = customer.Phone;
+        customerAddress = customer.Address;
+        customerEmail = customer.Email;
+        ID = customer.CustomerID;
+
+        store.AddCustomerDB(customerName,customerPhone,customerAddress,customerEmail,ID);
         Console.WriteLine("Customer info added!");
         Input.GetEnter();
+    }
+     static void DeleteCustomer()
+    {
+        Store store = new Store();
+        int customersID = int.Parse(Input.GetFieldSimple("Select customer ID"));
+        store.DeleteCustomerDB(customersID);
+        Console.WriteLine("Customer info Deleted!");
+    }
+
+    static void GetProductMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("=== Product ===");
+        
+        string[] staffOptions = new string[] {
+                    "View Product", // 1
+                    "Register new Product", // 2
+                    "Edit Product",// 3
+                };
+        string choice = Input.GetFieldOptions(staffOptions, returnOptionName: false);
+
+        switch (choice)
+                {
+                    case "1": 
+                    ViewProduct();
+                        break;
+                    case "2": 
+                    RegisterProduct();
+                        break;
+                    case "3": // Enter a date
+                    EditProduct();
+                        break;
+                }
+    }
+     static void ViewProduct()
+    { 
+        Console.Clear();
+        Store store = new Store();
+        string customerName = Input.GetFieldSimple("Enter product name");
+        int customerPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
+        int customerQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
+        store.AddProductDB(customerName,customerPrice,customerQuantity);
+        store.DisplayProductDB();
+        Input.GetEnter();    
+    }
+    //products menu
+    static void RegisterProduct()
+    {
+         Console.Clear();
+        Store store = new Store();
+        /*string name, string phone,
+        string address, string email, int customerID*/
+        string name = Input.GetFieldSimple("Enter product name");
+        int price = int.Parse(Input.GetFieldSimple("Enter Price"));
+        int quantity = int.Parse(Input.GetFieldSimple("Enter stock"));
+        store.AddProductDB(name,price,quantity);
+        Console.WriteLine("product info added!");
+        Input.GetEnter();
+    }
+    //products menu
+    static void EditProduct()
+    {
+       Store store = new Store();
+       //Product product = new Product();
+       //store.GetProduct();
+    }
+
+    static void GetSaleMenu()
+    {
+       Console.Clear();
+       Store store = new Store();
+       int customersID = int.Parse(Input.GetFieldSimple("Select customer ID"));
+       int ProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
+       int amount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
+       
+       Input.GetEnter();
+       
     }
 }

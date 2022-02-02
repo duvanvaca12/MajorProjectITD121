@@ -92,6 +92,7 @@ namespace Database.Shop
             Name = name;
             Phone = phone;
             Address = address;
+            Email = email;
             LoyaltyPoint = 0;
         }
     }
@@ -216,6 +217,14 @@ namespace Database.Shop
         {
             Product newProduct = new Product(productName, price, quantity);
             _products.Add(newProduct);
+        }
+        public void DeleteCustomerDB(int customerID)
+        {
+            //Customer newCustomer = new Customer(name, phone, address,
+            //email, customerID);
+            
+            _customers.Remove(GetCustomer(customerID));
+            
         }
 
 
@@ -402,13 +411,17 @@ namespace Database.Shop
         {
             List<string[]> printCustomerDB = new List<string[]>();
 
-            printCustomerDB.Add(new string[] { "ID", "Name", "Loyalty points" });
+            printCustomerDB.Add(new string[] { "ID", "Name","Phone",
+             "Address","Email","Loyalty points"});
             // add details of all books to the print data
             for (int i = 0; i < _customers.Count; i++)
             {
                 printCustomerDB.Add(new string[] {
                     _customers[i].CustomerID.ToString(),
                     _customers[i].Name,
+                    _customers[i].Phone,
+                    _customers[i].Address,
+                    _customers[i].Email,
                     _customers[i].LoyaltyPoint.ToString()
                 });
             }    
