@@ -55,10 +55,11 @@ namespace Database.Shop
         /// <param name="id"></param>
         /// <param name="password"></param>
         /// <param name="admin"></param>
-        public Staff(int id, string password, bool admin)
+        public Staff(int id, string password,string name, bool admin)
         {
             ID = id;
             Password = password;
+            Name = name;
             Admin = admin;
         }
     }
@@ -162,13 +163,13 @@ namespace Database.Shop
         /// <param name="id">Input the number of the staff's ID</param>
         /// <param name="password">Input the string of the staff's password</param>
         /// <param name="admin">The password that matches staff's password</param>
-        public void AddStaff(int id, string password, bool admin)
+        public void AddStaff(int id, string password,string name, bool admin)
         {
-            Staff newstaff = new Staff(id, password, admin);
-            if (admin == true)
-            {
+            Staff newstaff = new Staff(id, password,name,admin);
+            //if (admin == true)
+            //{
                 _staffs.Add(newstaff);
-            }
+            //}
         }
 
 
@@ -397,7 +398,7 @@ namespace Database.Shop
             List<string[]> printStaffDB = new List<string[]>();
             printStaffDB.Add(new string[] {"staffID", "StaffName", "Admin"});
             // add details of all books to the print data
-            for (int i = 0; i < _sales.Count; i++)
+            for (int i = 0; i < _staffs.Count; i++)
             {
                 printStaffDB.Add(new string[] {
                     _staffs[i].ID.ToString(),
