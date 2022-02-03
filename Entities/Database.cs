@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Database.Shop
 {
@@ -55,7 +57,7 @@ namespace Database.Shop
         /// <param name="id"></param>
         /// <param name="password"></param>
         /// <param name="admin"></param>
-        public Staff(int id, string password,string name, bool admin)
+        public Staff(int id, string password, string name, bool admin)
         {
             ID = id;
             Password = password;
@@ -141,7 +143,7 @@ namespace Database.Shop
         public int StaffActive;
         public int TotalPrice;
         private List<Product> _products;
-        private List<Customer> _customers;
+        public List<Customer> _customers;
         private List<Staff> _staffs;
         private List<Sale> _sales;
 
@@ -163,18 +165,18 @@ namespace Database.Shop
         /// <param name="id">Input the number of the staff's ID</param>
         /// <param name="password">Input the string of the staff's password</param>
         /// <param name="admin">The password that matches staff's password</param>
-        public void AddStaff(int id, string password,string name, bool admin)
+        public void AddStaff(int id, string password, string name, bool admin)
         {
-            Staff newstaff = new Staff(id, password,name,admin);
+            Staff newstaff = new Staff(id, password, name, admin);
             //if (admin == true)
             //{
-                _staffs.Add(newstaff);
+            _staffs.Add(newstaff);
             //}
         }
 
 
         /// <summary>
-        /// Add new customer's data to the database of customer
+        /// /// Add new customer's data to the database of customer
         /// </summary>
         /// <param name="name"> Input name of the new customer</param>
         /// <param name="phone"> Input phone number of new customer</param>
@@ -188,7 +190,30 @@ namespace Database.Shop
             email, customerID);
             _customers.Add(newCustomer);
         }
-
+        public void EditCustomerDB(string infoEdited, string optionEdit)
+        {
+            switch (optionEdit)
+            {
+                case "1":
+                    _customers.Select(fillEdited => { fillEdited.Name = infoEdited; return fillEdited; }).ToList();
+                    break;
+                case "2":
+                    _customers.Select(fillEdited => { fillEdited.Address = infoEdited; return fillEdited; }).ToList();
+                    break;
+                case "3": // Enter a date
+                    _customers.Select(fillEdited => { fillEdited.Phone = infoEdited; return fillEdited; }).ToList();
+                    break;
+                case "4": // Exit
+                    _customers.Select(fillEdited => { fillEdited.Email = infoEdited; return fillEdited; }).ToList();
+                    break;
+                case "5": // Exit
+                          //_customers.Select(c => {c.Birthday = infoEdited; return c;}).ToList();
+                    break;
+                case "6": // Exit
+                    _customers.Select(fillEdited => { fillEdited.LoyaltyPoint = int.Parse(infoEdited); return fillEdited; }).ToList();
+                    break;
+            }
+        }
         /// <summary>
         /// Add new sale process data to the database of sale
         /// </summary>
@@ -442,7 +467,7 @@ namespace Database.Shop
             {
                 if (_customers[i].Name.Contains(customerSearch) || _customers[i].Phone.Contains(customerSearch)
                 || _customers[i].Address.Contains(customerSearch) || _customers[i].Email.Contains(customerSearch)
-                || _customers[i].LoyaltyPoint.ToString().Contains(customerSearch) || 
+                || _customers[i].LoyaltyPoint.ToString().Contains(customerSearch) ||
                 _customers[i].CustomerID.ToString().Contains(customerSearch))
                 {
                     printCustomerDB.Add(new string[] {
@@ -453,10 +478,13 @@ namespace Database.Shop
                     _customers[i].Email,
                     _customers[i].LoyaltyPoint.ToString()
                     });
+                    Utility.PrintTable(printCustomerDB);
+                }
+                else
+                {
+                    Console.WriteLine("No User found");
                 }
             }
-
-            Utility.PrintTable(printCustomerDB);
         }
         public void DisplayProductDB()
         {

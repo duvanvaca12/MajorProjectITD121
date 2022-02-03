@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Database.Shop;
 
 class Program
 {
     static Store store = new Store();
-    static Staff staff = new Staff(1,"admin","Dane",true);
+    static Staff staff = new Staff(1, "admin", "Dane", true);
+    public static int count = 1;
     static void Main(string[] args)
     {
-      if (Login())
+        if (Login())
         {
             bool exit = false;
             // program repeats until exit is true
@@ -47,9 +49,9 @@ class Program
                         //sales
                         break;
                     case "5":
-                    Login();
-                         //Logout
-                         break;
+                        Login();
+                        //Logout
+                        break;
                     case "6": // Exit
                         exit = true;
                         break;
@@ -86,16 +88,13 @@ class Program
         } while (password != PASS);
         //userID = int.Parse(Input.GetFieldInt("UserID", min: 0));
         //password = Input.GetFieldPassword("Password");
-
         return userID == USER && password == PASS;
     }
-
     //main menu
     static void GetStaffMenu()
     {
         Console.Clear();
         Console.WriteLine("=== STAFF ===");
-        Staff staff = new Staff(1, "admin","Dane", true);
         Console.WriteLine($"Staff ID: {staff.ID}");
         if (staff.Admin == true)
         {
@@ -142,7 +141,7 @@ class Program
         currentPW = staff.Password;
         string newPW = Input.GetFieldSimple("Enter new password");
         string confirm = Input.GetFieldSimple("Confirm?");
-        if (confirm == "yes"||confirm == "Yes")
+        if (confirm == "yes" || confirm == "Yes")
         {
             currentPW = newPW;
             Console.WriteLine("Password Updated!");
@@ -155,26 +154,26 @@ class Program
         //Staff staff = new Staff(1,"admin",true);
         bool admin = false;
         string staffName = Input.GetFieldSimple("Enter staff name");
-        string staffPassword  = Input.GetFieldPassword("Enter staff password");
+        string staffPassword = Input.GetFieldPassword("Enter staff password");
         string confirmAdmin = Input.GetFieldSimple("Confirm Admin? ");
         if (confirmAdmin == "Yes")
         {
             admin = true;
-        } else {admin = false;} 
+        }
+        else { admin = false; }
         Console.WriteLine("Staff added!");
-        store.AddStaff(staff.ID,staffPassword,staffName,admin);
-        
+        store.AddStaff(staff.ID, staffPassword, staffName, admin);
+
         Input.GetEnter();
     }
     static void ViewStaff()
     {
-         Console.Clear();
-         //store.AddStaff(1,"admin","Dane",true);
-         store.DisplayStaffDB();
-         Input.GetEnter();
-        
-    }
+        Console.Clear();
+        //store.AddStaff(1,"admin","Dane",true);
+        store.DisplayStaffDB();
+        Input.GetEnter();
 
+    }
     //Main Menu                    
     static void GetCustomerMenu()
     {
@@ -198,7 +197,7 @@ class Program
                 AddCustomer();
                 break;
             case "3": // Enter a date
-                Console.WriteLine("3");
+                EditCustomer();
                 break;
             case "4": // Exit
                 DeleteCustomer();
@@ -207,21 +206,74 @@ class Program
 
         Input.GetEnter(); // press ENTER to continue
     }
+
+    private static void EditCustomer()
+    {
+        Console.Clear();
+        store.DisplayCustomerDB();
+        string query = Input.GetFieldSimple("Enter the ID of the customer or search: ");
+        var customer = store.GetCustomer(int.Parse(query));
+
+        Console.Clear();
+        string[] CustomerOptions = new string[] {
+                    $"Name: {customer.Name}", // 1
+                    $"Address: {customer.Address}", // 2
+                    $"Phone: {customer.Phone}",// 3
+                    $"Email: {customer.Email}", // 4
+                    //$"Birthday: {customer.Birthday}", // 5
+                    $"LoyaltyPoint: {customer.LoyaltyPoint}"
+                };
+        string choice = Input.GetFieldOptions(CustomerOptions, returnOptionName: false);
+        string editing = string.Empty;
+        if (choice == "1")
+        {
+            editing = Input.GetFieldSimple("Name");
+        }
+        else if (choice == "2")
+        {
+            editing = Input.GetFieldSimple("Adress");
+        }
+        else if (choice == "3")
+        {
+            editing = Input.GetFieldSimple("Phone");
+        }
+        else if (choice == "4")
+        {
+            editing = Input.GetFieldSimple("Email");
+        }
+        switch (choice)
+        {
+            case "1":
+                Console.WriteLine("New Name");
+                store.EditCustomerDB(editing, "1");
+
+                break;
+            case "2":
+                store.EditCustomerDB(editing, "2");
+                break;
+            case "3": // Enter a date
+                store.EditCustomerDB(editing, "3");
+                break;
+            case "4": // Exit
+                store.EditCustomerDB(editing, "4");
+                break;
+        }
+        Console.Clear();
+        store.DisplayCustomerDB();
+    }
+
     //customer menu
     static void DisplayCustomer()
     {
-         Console.Clear();
-        //store.AddCustomerDB("Kada Jin","435-356-455",
-        //"Cook 24 street","kadajin@email.com",2);
-         store.DisplayCustomerDB();
-         Input.GetEnter();
-        store.DisplayCustomerDB();
-        store.AddCustomerDB("Cesar","301203213", "123142 Ssat", "sdad@msdasd.com", 213);
-        Console.Write("Enter the ID of the customer or search: ");
         Console.Clear();
-        string SerchInput = Console.ReadLine();
-        SearchCustomerInfo(SerchInput);
-        Input.GetEnter();
+        store.DisplayCustomerDB();
+        while (true)
+        {
+            string query = Input.GetFieldSimple("Enter the ID of the customer or search: ");
+            if (string.IsNullOrEmpty(query)) { return; }
+            Console.Clear();
+            SearchCustomerInfo(query);
+        }
     }
 
     static void SearchCustomerInfo(string SearchInput)
@@ -238,18 +290,18 @@ class Program
         string customerPhone = Input.GetFieldSimple("Enter phone number");
         string customerAddress = Input.GetFieldSimple("Enter address");
         string customerEmail = Input.GetFieldSimple("Enter email");
-        int ID = int.Parse(Input.GetFieldSimple("Enter ID"));
+        int ID = count++;
         Customer customer = new Customer(customerName, customerPhone, customerAddress,
         customerEmail, ID);
         customerName = customer.Name;
         customerPhone = customer.Phone;
         customerAddress = customer.Address;
         customerEmail = customer.Email;
-        ID = customer.CustomerID;
         store.AddCustomerDB(customerName, customerPhone, customerAddress, customerEmail, ID);
         Console.WriteLine("Customer info added!");
         Input.GetEnter();
     }
+
     static void DeleteCustomer()
     {
         int customersID = int.Parse(Input.GetFieldSimple("Select customer ID"));
@@ -309,32 +361,37 @@ class Program
         //Product product = new Product();
         //store.GetProduct();
     }
-
     static void GetSaleMenu()
     {
-       Console.Clear();
-       //int customerID, int productID, int quantity,
-       bool spendPoints = false;
-       bool applyDelivery = false;
-       int SaleCustomerID = int.Parse(Input.GetFieldSimple("Select customer ID"));
-       //Customer customer = store.GetCustomer(SaleCustomerID);
-       int SaleProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
-       int SaleAmount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
-       string SaleSpendLoyalty = Input.GetFieldSimple("Will you Spend points?");
-       if (SaleSpendLoyalty == "Yes"||SaleSpendLoyalty == "Y")
-       {
-           spendPoints = true;
-       }
-       string SaleDelivery = Input.GetFieldSimple("Will you apply delivery?");
-       if (SaleDelivery == "Yes"||SaleDelivery == "Y")
-       {
-           applyDelivery = true;
-       }
-       store.ExecuteSale(SaleCustomerID,SaleProductID,SaleAmount,spendPoints,
-       applyDelivery);
-       store.DisplaySale();
-       
-       Input.GetEnter();
-        
+        Console.Clear();
+        //int customerID, int productID, int quantity,
+        bool spendPoints = false;
+        bool applyDelivery = false;
+        int SaleCustomerID = int.Parse(Input.GetFieldSimple("Select customer ID"));
+        //Customer customer = store.GetCustomer(SaleCustomerID);
+        int SaleProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
+        int SaleAmount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
+        string SaleSpendLoyalty = Input.GetFieldSimple("Will you Spend points?");
+        if (SaleSpendLoyalty == "Yes" || SaleSpendLoyalty == "Y")
+        {
+            spendPoints = true;
+        }
+        string SaleDelivery = Input.GetFieldSimple("Will you apply delivery?");
+        if (SaleDelivery == "Yes" || SaleDelivery == "Y")
+        {
+            applyDelivery = true;
+        }
+        store.ExecuteSale(SaleCustomerID, SaleProductID, SaleAmount, spendPoints,
+        applyDelivery);
+        store.DisplaySale();
+
+        Input.GetEnter();
+
     }
 }
+
+
+
+
+
+
