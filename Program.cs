@@ -93,7 +93,14 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== STAFF ===");
-        
+        Store store = new Store();
+        Staff staff = new Staff(1,"admin",true);
+        Console.WriteLine($"Staff ID: {staff.ID}");
+        if (staff.Admin == true)
+        {
+            Console.WriteLine("Type: Administrater");
+        }else {Console.WriteLine("Type: Staff");}
+
         string[] staffOptions = new string[] {
                     "Update Password", // 1
                     "Your sales", // 2
@@ -170,6 +177,7 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== CUSTOMER ===");
+        Store store = new Store();
         
         string[] CustomerOptions = new string[] {
                     "View Customer", // 1
@@ -251,6 +259,7 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== Product ===");
+        Store store3 = new Store();
         
         string[] staffOptions = new string[] {
                     "View Product", // 1
@@ -275,32 +284,37 @@ class Program
      static void ViewProduct()
     { 
         Console.Clear();
-        Store store = new Store();
-        string customerName = Input.GetFieldSimple("Enter product name");
-        int customerPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
-        int customerQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
-        store.AddProductDB(customerName,customerPrice,customerQuantity);
-        store.DisplayProductDB();
-        Input.GetEnter();    
+        Store store3 = new Store();
+        
+        //Product product = new Product(ProductName,ProductPrice,ProductQuantity);
+        //string productName = Input.GetFieldSimple("Enter product name");
+        //int productPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
+        //int productQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
+        //store.AddProductDB(productName,productPrice,productQuantity);
+        store3.AddProductDB("Witcher",100,50);
+        store3.AddProductDB("MW3",80,80);
+        store3.DisplayProductDB();
+        Input.GetEnter();       
     }
     //products menu
     static void RegisterProduct()
     {
-         Console.Clear();
-        Store store = new Store();
+        Console.Clear();
+        Store store3 = new Store();
         /*string name, string phone,
         string address, string email, int customerID*/
-        string name = Input.GetFieldSimple("Enter product name");
-        int price = int.Parse(Input.GetFieldSimple("Enter Price"));
-        int quantity = int.Parse(Input.GetFieldSimple("Enter stock"));
-        store.AddProductDB(name,price,quantity);
+        string ProductName = Input.GetFieldSimple("Enter product name");
+        int ProductPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
+        int ProductQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
+        Product product = new Product(ProductName,ProductPrice,ProductQuantity);
+        store3.AddProductDB(ProductName,ProductPrice,ProductQuantity);
         Console.WriteLine("product info added!");
         Input.GetEnter();
     }
     //products menu
     static void EditProduct()
     {
-       Store store = new Store();
+       Store store3 = new Store();
        //Product product = new Product();
        //store.GetProduct();
     }
@@ -309,11 +323,26 @@ class Program
     {
        Console.Clear();
        Store store = new Store();
-       int customersID = int.Parse(Input.GetFieldSimple("Select customer ID"));
-       int ProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
-       int amount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
+       //int customerID, int productID, int quantity,
+       //bool spendLoyalty, bool delivery
+       int SaleCustomerID = int.Parse(Input.GetFieldSimple("Select customer ID"));
+       Customer customer = store.GetCustomer(SaleCustomerID);
+       int SaleProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
+       int SaleAmount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
+       string SaleSpendLoyalty = Input.GetFieldSimple("Will you Spend points?");
+       if (SaleSpendLoyalty == "Yes"&&SaleSpendLoyalty == "Y")
+       {
+           customer.SpendLoyalty = true;
+       }
+       string SaleDelivery = Input.GetFieldSimple("Will you apply delivery?");
+       if (SaleDelivery == "Yes"&&SaleDelivery == "Y")
+       {
+           customer.Delivery = true;
+       }
+       store.ExecuteSale(SaleCustomerID,SaleProductID,SaleAmount,customer.SpendLoyalty,
+       customer.Delivery);
+       store.DisplaySale();
        
        Input.GetEnter();
-       
     }
 }
