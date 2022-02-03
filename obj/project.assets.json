@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/cesar/Documents/ProjectOriginal/MajorProjectITD121/MajorProjectITD121.csproj",
+      "projectUniqueName": "/home/cesar/Documents/MajorProjectITD121/MajorProjectITD121.csproj",
       "projectName": "MajorProjectITD121",
-      "projectPath": "/home/cesar/Documents/ProjectOriginal/MajorProjectITD121/MajorProjectITD121.csproj",
+      "projectPath": "/home/cesar/Documents/MajorProjectITD121/MajorProjectITD121.csproj",
       "packagesPath": "/home/cesar/.nuget/packages/",
-      "outputPath": "/home/cesar/Documents/ProjectOriginal/MajorProjectITD121/obj/",
+      "outputPath": "/home/cesar/Documents/MajorProjectITD121/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/cesar/.nuget/NuGet/NuGet.Config"
