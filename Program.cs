@@ -3,6 +3,7 @@ using Database.Shop;
 
 class Program
 {
+    static Store store = new Store();
     static void Main(string[] args)
     {
       Store store = new Store();
@@ -61,7 +62,6 @@ class Program
         bool validID = false;
         bool validPass = false;
         Console.Clear();
-        Store store = new Store();
         Staff staff = new Staff(1,"admin",true);
         //const string USER = "admin";
         //const string PASS = "admin";
@@ -93,7 +93,6 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== STAFF ===");
-        Store store = new Store();
         Staff staff = new Staff(1,"admin",true);
         Console.WriteLine($"Staff ID: {staff.ID}");
         if (staff.Admin == true)
@@ -150,7 +149,6 @@ class Program
     static void RegisterStaff()
     {
         Console.Clear();
-        Store store = new Store();
         Staff staff = new Staff(1,"admin",true);
         bool admin = staff.Admin;
         string name = Input.GetFieldSimple("Enter staff name");
@@ -166,7 +164,6 @@ class Program
     static void ViewStaff()
     {
         Console.Clear();
-         Store store = new Store();
          store.DisplayStaffDB();
          Input.GetEnter();
         
@@ -177,7 +174,6 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== CUSTOMER ===");
-        Store store = new Store();
         
         string[] CustomerOptions = new string[] {
                     "View Customer", // 1
@@ -209,7 +205,6 @@ class Program
     static void DisplayCustomer()
     {
          Console.Clear();
-         Store store = new Store();
          string customerName = Input.GetFieldSimple("Enter customer name");
          string customerPhone = Input.GetFieldSimple("Enter phone number");
          string customerAddress = Input.GetFieldSimple("Enter address");
@@ -227,7 +222,6 @@ class Program
     static void AddCustomer()
     {
         Console.Clear();
-        Store store = new Store();
         /*string name, string phone,
         string address, string email, int customerID*/
         string customerName = Input.GetFieldSimple("Enter customer name");
@@ -249,7 +243,6 @@ class Program
     }
      static void DeleteCustomer()
     {
-        Store store = new Store();
         int customersID = int.Parse(Input.GetFieldSimple("Select customer ID"));
         store.DeleteCustomerDB(customersID);
         Console.WriteLine("Customer info Deleted!");
@@ -259,7 +252,6 @@ class Program
     {
         Console.Clear();
         Console.WriteLine("=== Product ===");
-        Store store3 = new Store();
         
         string[] staffOptions = new string[] {
                     "View Product", // 1
@@ -284,37 +276,26 @@ class Program
      static void ViewProduct()
     { 
         Console.Clear();
-        Store store3 = new Store();
-        
-        //Product product = new Product(ProductName,ProductPrice,ProductQuantity);
-        //string productName = Input.GetFieldSimple("Enter product name");
-        //int productPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
-        //int productQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
-        //store.AddProductDB(productName,productPrice,productQuantity);
-        store3.AddProductDB("Witcher",100,50);
-        store3.AddProductDB("MW3",80,80);
-        store3.DisplayProductDB();
+        store.DisplayProductDB();
         Input.GetEnter();       
     }
     //products menu
     static void RegisterProduct()
     {
         Console.Clear();
-        Store store3 = new Store();
         /*string name, string phone,
         string address, string email, int customerID*/
         string ProductName = Input.GetFieldSimple("Enter product name");
         int ProductPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
         int ProductQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
         Product product = new Product(ProductName,ProductPrice,ProductQuantity);
-        store3.AddProductDB(ProductName,ProductPrice,ProductQuantity);
+        store.AddProductDB(ProductName,ProductPrice,ProductQuantity);
         Console.WriteLine("product info added!");
         Input.GetEnter();
     }
     //products menu
     static void EditProduct()
     {
-       Store store3 = new Store();
        //Product product = new Product();
        //store.GetProduct();
     }
@@ -322,7 +303,6 @@ class Program
     static void GetSaleMenu()
     {
        Console.Clear();
-       Store store = new Store();
        //int customerID, int productID, int quantity,
        //bool spendLoyalty, bool delivery
        int SaleCustomerID = int.Parse(Input.GetFieldSimple("Select customer ID"));
