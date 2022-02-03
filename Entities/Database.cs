@@ -8,7 +8,7 @@ namespace Database.Shop
     public class Sale
     {
         //non-static fields
-        public string CustomerName{ get; set; }
+        public string CustomerName { get; set; }
         public string ProductName { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
@@ -16,20 +16,20 @@ namespace Database.Shop
         public int SaleLoyalty { get; set; }
         public int StaffID { get; set; }
 
-       /// <summary>
-       /// Initialize sale's data members
-       /// </summary>
-       /// <param name="customerName">String name of the customer who purchased product </param>
-       /// <param name="productName">String name of the product which purchased by customer</param>
-       /// <param name="productID">Integer ID of the product which purchased by customer</param>
-       /// <param name="quantity">Quantity of the products that customer purchased</param>
-       /// <param name="totalPrice">product.Price * quantity</param>
-       /// <param name="saleLoyalty">The earned loyalty points for products</param>
-       /// <param name="staffID">Integer ID of the staff who takes charge of the sale process</param>
-        public Sale (string customerName, string productName, int productID, int quantity, int totalPrice, 
+        /// <summary>
+        /// Initialize sale's data members
+        /// </summary>
+        /// <param name="customerName">String name of the customer who purchased product </param>
+        /// <param name="productName">String name of the product which purchased by customer</param>
+        /// <param name="productID">Integer ID of the product which purchased by customer</param>
+        /// <param name="quantity">Quantity of the products that customer purchased</param>
+        /// <param name="totalPrice">product.Price * quantity</param>
+        /// <param name="saleLoyalty">The earned loyalty points for products</param>
+        /// <param name="staffID">Integer ID of the staff who takes charge of the sale process</param>
+        public Sale(string customerName, string productName, int productID, int quantity, int totalPrice,
         int saleLoyalty, int staffID)
         {
-            CustomerName = customerName; 
+            CustomerName = customerName;
             ProductName = productName;
             ProductID = productID;
             Quantity = quantity;
@@ -47,7 +47,7 @@ namespace Database.Shop
 
         public int ID { get; set; }
         public string Password { get; set; }
-        public string Name {get;set; }
+        public string Name { get; set; }
         public bool Admin { get; set; }
         /// <summary>
         /// Initialize staff's data members
@@ -76,8 +76,8 @@ namespace Database.Shop
         public string Email { get; set; }
         public int CustomerID { get; set; }
         public int LoyaltyPoint { get; set; }
-        public bool SpendLoyalty {get; set; }
-        public bool Delivery{get; set; }
+        public bool SpendLoyalty { get; set; }
+        public bool Delivery { get; set; }
         /// <summary>
         /// Initialize customer's data members
         /// </summary>
@@ -113,12 +113,12 @@ namespace Database.Shop
         //static member
         private static int _numProducts = 0;
 
-/// <summary>
-/// Initialize product's data members
-/// </summary>
-/// <param name="productName">String name of the product</param>
-/// <param name="price">Integer price of the product</param>
-/// <param name="quantity">Integer number of quantity of product which customer purchased.</param>
+        /// <summary>
+        /// Initialize product's data members
+        /// </summary>
+        /// <param name="productName">String name of the product</param>
+        /// <param name="price">Integer price of the product</param>
+        /// <param name="quantity">Integer number of quantity of product which customer purchased.</param>
         public Product(string productName, int price, int quantity)
         {
             _numProducts += 1;
@@ -130,9 +130,9 @@ namespace Database.Shop
         }
     }
 
-/// <summary>
-/// Store class which can activate the sale process and display the Databases to the main method
-/// </summary>
+    /// <summary>
+    /// Store class which can activate the sale process and display the Databases to the main method
+    /// </summary>
     class Store
     {
         /// <summary>
@@ -202,7 +202,7 @@ namespace Database.Shop
         public void AddSaleDB(string customerName, string productName, int productID, int quantity,
         int totalPrice, int saleLoyalty, int staffID)
         {
-            Sale newSale = new Sale(customerName, productName, productID, quantity, totalPrice, 
+            Sale newSale = new Sale(customerName, productName, productID, quantity, totalPrice,
             saleLoyalty, staffID);
             _sales.Add(newSale);
         }
@@ -223,9 +223,9 @@ namespace Database.Shop
         {
             //Customer newCustomer = new Customer(name, phone, address,
             //email, customerID);
-            
+
             _customers.Remove(GetCustomer(customerID));
-            
+
         }
 
 
@@ -246,7 +246,7 @@ namespace Database.Shop
             return null;
         }
 
-        
+
 
         /// <summary>
         /// Get the list of customer
@@ -313,7 +313,7 @@ namespace Database.Shop
         public void ExecuteSale(int customerID, int productID, int quantity,
         bool spendLoyalty, bool delivery)
         {
-            
+
             Customer customer = GetCustomer(customerID);
             Product product = GetProduct(productID);
             Staff staff = GetStaff(StaffActive);
@@ -396,7 +396,7 @@ namespace Database.Shop
         public void DisplayStaffDB()
         {
             List<string[]> printStaffDB = new List<string[]>();
-            printStaffDB.Add(new string[] {"staffID", "StaffName", "Admin"});
+            printStaffDB.Add(new string[] { "staffID", "StaffName", "Admin" });
             // add details of all books to the print data
             for (int i = 0; i < _staffs.Count; i++)
             {
@@ -425,13 +425,43 @@ namespace Database.Shop
                     _customers[i].Email,
                     _customers[i].LoyaltyPoint.ToString()
                 });
-            }    
+            }
+            Utility.PrintTable(printCustomerDB);
+        }
+
+        public void DisplayCustomerDB(string customerSearch)
+        {
+            List<string[]> printCustomerDB = new List<string[]>();
+
+            printCustomerDB.Add(new string[] { "ID", "Name","Phone",
+             "Address","Email","Loyalty points"});
+
+            // add details of all books to the print data
+
+            for (int i = 0; i < _customers.Count; i++)
+            {
+                if (_customers[i].Name.Contains(customerSearch) || _customers[i].Phone.Contains(customerSearch)
+                || _customers[i].Address.Contains(customerSearch) || _customers[i].Email.Contains(customerSearch)
+                || _customers[i].LoyaltyPoint.ToString().Contains(customerSearch) || 
+                _customers[i].CustomerID.ToString().Contains(customerSearch))
+                {
+                    printCustomerDB.Add(new string[] {
+                    _customers[i].CustomerID.ToString(),
+                    _customers[i].Name,
+                    _customers[i].Phone,
+                    _customers[i].Address,
+                    _customers[i].Email,
+                    _customers[i].LoyaltyPoint.ToString()
+                    });
+                }
+            }
+
             Utility.PrintTable(printCustomerDB);
         }
         public void DisplayProductDB()
         {
             List<string[]> printProductDB = new List<string[]>();
-      
+
             printProductDB.Add(new string[] { "ID", "Product name", "Price", "In stock" });
             // add details of all books to the print data
             for (int i = 0; i < _products.Count; i++)
