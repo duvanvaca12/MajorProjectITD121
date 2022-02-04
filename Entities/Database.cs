@@ -46,7 +46,6 @@ namespace Database.Shop
     /// </summary>
     public class Staff
     {
-
         public int ID { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
@@ -111,9 +110,8 @@ namespace Database.Shop
         public int Price { get; set; }
         public int RemainQuantity { get; set; }
         public int Quantity { get; set; }
-        public int ProductID = 0;
+        public int ProductID { get; set; }
         //static member
-        private static int _numProducts = 0;
 
         /// <summary>
         /// Initialize product's data members
@@ -121,10 +119,9 @@ namespace Database.Shop
         /// <param name="productName">String name of the product</param>
         /// <param name="price">Integer price of the product</param>
         /// <param name="remainQuantity">Integer number of quantity of product which customer purchased.</param>
-        public Product(string productName, int price, int remainQuantity)
+        public Product(string productName, int price, int remainQuantity, int productID)
         {
-            _numProducts += 1;
-            ProductID = _numProducts;
+            ProductID = productID;
             ProductName = productName;
             Price = price;
             RemainQuantity = remainQuantity;
@@ -142,7 +139,7 @@ namespace Database.Shop
         /// </summary>
         public int StaffActive;
         public int TotalPrice;
-        private List<Product> _products;
+        public List<Product> _products;
         public List<Customer> _customers;
         private List<Staff> _staffs;
         private List<Sale> _sales;
@@ -221,6 +218,27 @@ namespace Database.Shop
                     break;
             }
         }
+        public void EditProductDB(string infoEdited, string optionEdit, int ProductID)
+        {
+            switch (optionEdit)
+            {
+                case "1":
+                    _products.Where(c => c.ProductID == ProductID)
+                        .Select(fillEdited => { fillEdited.ProductName = infoEdited; return fillEdited; })
+                        .ToList();
+                    break;
+                case "2":
+                    _products.Where(c => c.ProductID == ProductID)
+                        .Select(fillEdited => { fillEdited.Price = int.Parse(infoEdited); return fillEdited; })
+                        .ToList();
+                    break;
+                case "3": // Enter a date
+                    _products.Where(c => c.ProductID == ProductID)
+                        .Select(fillEdited => { fillEdited.Quantity = int.Parse(infoEdited); return fillEdited; })
+                        .ToList();
+                    break;
+            }
+        }
         /// <summary>
         /// Add new sale process data to the database of sale
         /// </summary>
@@ -246,9 +264,9 @@ namespace Database.Shop
         /// <param name="productName"> new product name</param>
         /// <param name="price"> price of the product</param>
         /// <param name="quantity"> stock of the product</param>
-        public void AddProductDB(string productName, int price, int quantity)
+        public void AddProductDB(string productName, int price, int quantity, int productID)
         {
-            Product newProduct = new Product(productName, price, quantity);
+            Product newProduct = new Product(productName, price, quantity, productID);
             _products.Add(newProduct);
         }
         public void DeleteCustomerDB(int customerID)
