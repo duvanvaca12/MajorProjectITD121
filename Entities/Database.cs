@@ -168,10 +168,7 @@ namespace Database.Shop
         public void AddStaff(int id, string password, string name, bool admin)
         {
             Staff newstaff = new Staff(id, password, name, admin);
-            //if (admin == true)
-            //{
             _staffs.Add(newstaff);
-            //}
         }
 
 
@@ -338,7 +335,6 @@ namespace Database.Shop
         public void ExecuteSale(int customerID, int productID, int quantity,
         bool spendLoyalty, bool delivery)
         {
-
             Customer customer = GetCustomer(customerID);
             Product product = GetProduct(productID);
             Staff staff = GetStaff(StaffActive);
@@ -365,6 +361,9 @@ namespace Database.Shop
             {
                 TotalPrice += 20;
             }
+            Sale sale = new Sale(customer.Name,product.ProductName,product.ProductID,
+            product.Quantity,TotalPrice,customer.LoyaltyPoint,staff.ID);
+            
             AddSaleDB(customer.Name, product.ProductName, productID, quantity, TotalPrice,
             pointsEarned, staff.ID);
         }

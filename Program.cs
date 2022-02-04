@@ -65,6 +65,7 @@ class Program
     {
         bool validID = false;
         bool validPass = false;
+        store.ValidateLogin(1,"admin");
         Console.Clear();
         //const string USER = "admin";
         //const string PASS = "admin";
@@ -160,17 +161,22 @@ class Program
     {
         Console.Clear();
         //Staff staff = new Staff(1,"admin",true);
-        bool admin = false;
+        store.AddStaff(1,"admin","Dane",true);
+        bool staffAdmin = false;
         string staffName = Input.GetFieldSimple("Enter staff name");
         string staffPassword = Input.GetFieldPassword("Enter staff password");
         string confirmAdmin = Input.GetFieldSimple("Confirm Admin? ");
         if (confirmAdmin == "Yes")
         {
-            admin = true;
+            staffAdmin = true;
         }
-        else { admin = false; }
+        else { staffAdmin = false; }
         Console.WriteLine("Staff added!");
-        store.AddStaff(staff.ID, staffPassword, staffName, admin);
+        staff.ID = count + 1;
+        staff.Name = staffName;
+        staff.Password = staffPassword;
+        staff.Admin = staffAdmin;
+        store.AddStaff(staff.ID, staffPassword, staffName, staffAdmin);
         store.ValidateLogin(staff.ID,staffPassword);
         Input.GetEnter();
     }
@@ -299,12 +305,12 @@ class Program
         string customerAddress = Input.GetFieldSimple("Enter address");
         string customerEmail = Input.GetFieldSimple("Enter email");
         int ID = count++;
-        Customer customer = new Customer(customerName, customerPhone, customerAddress,
-        customerEmail, ID);
-        customerName = customer.Name;
-        customerPhone = customer.Phone;
-        customerAddress = customer.Address;
-        customerEmail = customer.Email;
+        //Customer customer = new Customer(customerName, customerPhone, customerAddress,
+        //customerEmail, ID);
+        //customerName = customer.Name;
+        //customerPhone = customer.Phone;
+        //customerAddress = customer.Address;
+        //customerEmail = customer.Email;
         store.AddCustomerDB(customerName, customerPhone, customerAddress, customerEmail, ID);
         Console.WriteLine("Customer info added!");
         Input.GetEnter();
@@ -377,24 +383,23 @@ class Program
         bool spendPoints = false;
         bool applyDelivery = false;
         int SaleCustomerID = int.Parse(Input.GetFieldSimple("Select customer ID"));
-        //Console.Clear();
-        //Customer customer = store.GetCustomer(SaleCustomerID);
+        
         int SaleProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
-        //Console.Clear();
+        
         int SaleAmount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
-        //Console.Clear();
+        
         string SaleSpendLoyalty = Input.GetFieldSimple("Will you Spend points?");
         if (SaleSpendLoyalty == "Yes" || SaleSpendLoyalty == "Y")
         {
             spendPoints = true;
         }else{spendPoints = false;}
-        //Console.Clear();
+        
         string SaleDelivery = Input.GetFieldSimple("Will you apply delivery?");
         if (SaleDelivery == "Yes" || SaleDelivery == "Y")
         {
             applyDelivery = true;
         }else{applyDelivery = false;}
-        //Console.Clear();
+        
         store.ExecuteSale(SaleCustomerID, SaleProductID, SaleAmount, spendPoints,
         applyDelivery);
         store.DisplaySale();
