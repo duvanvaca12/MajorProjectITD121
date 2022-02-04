@@ -65,8 +65,6 @@ class Program
     {
         bool validID = false;
         bool validPass = false;
-        store.ValidateLogin(1,"admin");
-        store.AddStaff(1,"admin","Dane",true);
         Console.Clear();
         //const string USER = "admin";
         //const string PASS = "admin";
@@ -78,16 +76,9 @@ class Program
         do
         {
             Console.Clear();
-            try { userID = int.Parse(Input.GetFieldInt("UserID", min: 0)); }
-            catch (FormatException)
-            {
-                Console.WriteLine("ID must be an integer");
-                return validID;
-            }
-
-            try { password = Input.GetFieldPassword("Password"); }
-            catch (FormatException)
-            { return validPass; }
+            Console.WriteLine("=== Login ===");
+            userID = int.Parse(Input.GetFieldInt("UserID", min: 0));
+            password = Input.GetFieldPassword("Password");
         } while (password != PASS);
         //userID = int.Parse(Input.GetFieldInt("UserID", min: 0));
         //password = Input.GetFieldPassword("Password");
@@ -217,12 +208,11 @@ class Program
 
         Input.GetEnter(); // press ENTER to continue
     }
-
     private static void EditCustomer()
     {
         Console.Clear();
         store.DisplayCustomerDB();
-        string query = Input.GetFieldSimple("Enter the ID of the customer or search: ");
+        string query = Input.GetFieldInt("Enter the ID of the customer");
         var customer = store.GetCustomer(int.Parse(query));
 
         Console.Clear();
@@ -256,17 +246,16 @@ class Program
         {
             case "1":
                 Console.WriteLine("New Name");
-                store.EditCustomerDB(editing, "1");
-
+                store.EditCustomerDB(editing, "1", int.Parse(query));
                 break;
             case "2":
-                store.EditCustomerDB(editing, "2");
+                store.EditCustomerDB(editing, "2", int.Parse(query));
                 break;
             case "3": // Enter a date
-                store.EditCustomerDB(editing, "3");
+                store.EditCustomerDB(editing, "3", int.Parse(query));
                 break;
             case "4": // Exit
-                store.EditCustomerDB(editing, "4");
+                store.EditCustomerDB(editing, "4", int.Parse(query));
                 break;
         }
         Console.Clear();

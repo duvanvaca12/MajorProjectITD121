@@ -187,27 +187,37 @@ namespace Database.Shop
             email, customerID);
             _customers.Add(newCustomer);
         }
-        public void EditCustomerDB(string infoEdited, string optionEdit)
+        public void EditCustomerDB(string infoEdited, string optionEdit, int customerID)
         {
             switch (optionEdit)
             {
                 case "1":
-                    _customers.Select(fillEdited => { fillEdited.Name = infoEdited; return fillEdited; }).ToList();
+                    _customers.Where(c => c.CustomerID == customerID)
+                        .Select(fillEdited => { fillEdited.Name = infoEdited; return fillEdited; })
+                        .ToList();
                     break;
                 case "2":
-                    _customers.Select(fillEdited => { fillEdited.Address = infoEdited; return fillEdited; }).ToList();
+                    _customers.Where(c => c.CustomerID == customerID)
+                        .Select(fillEdited => { fillEdited.Address = infoEdited; return fillEdited; })
+                        .ToList();
                     break;
                 case "3": // Enter a date
-                    _customers.Select(fillEdited => { fillEdited.Phone = infoEdited; return fillEdited; }).ToList();
+                    _customers.Where(c => c.CustomerID == customerID)
+                        .Select(fillEdited => { fillEdited.Phone = infoEdited; return fillEdited; })
+                        .ToList();
                     break;
                 case "4": // Exit
-                    _customers.Select(fillEdited => { fillEdited.Email = infoEdited; return fillEdited; }).ToList();
+                    _customers.Where(c => c.CustomerID == customerID)
+                        .Select(fillEdited => { fillEdited.Email = infoEdited; return fillEdited; })
+                        .ToList();
                     break;
                 case "5": // Exit
                           //_customers.Select(c => {c.Birthday = infoEdited; return c;}).ToList();
                     break;
                 case "6": // Exit
-                    _customers.Select(fillEdited => { fillEdited.LoyaltyPoint = int.Parse(infoEdited); return fillEdited; }).ToList();
+                    _customers.Where(c => c.CustomerID == customerID)
+                        .Select(fillEdited => { fillEdited.LoyaltyPoint = int.Parse(infoEdited); 
+                        return fillEdited; }).ToList();
                     break;
             }
         }
