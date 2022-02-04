@@ -120,14 +120,14 @@ namespace Database.Shop
         /// </summary>
         /// <param name="productName">String name of the product</param>
         /// <param name="price">Integer price of the product</param>
-        /// <param name="quantity">Integer number of quantity of product which customer purchased.</param>
-        public Product(string productName, int price, int quantity)
+        /// <param name="remainQuantity">Integer number of quantity of product which customer purchased.</param>
+        public Product(string productName, int price, int remainQuantity)
         {
             _numProducts += 1;
             ProductID = _numProducts;
             ProductName = productName;
             Price = price;
-            RemainQuantity = quantity;
+            RemainQuantity = remainQuantity;
 
         }
     }
@@ -414,6 +414,20 @@ namespace Database.Shop
                     _sales[i].Quantity.ToString(),
                     _sales[i].TotalPrice.ToString("C"),
                     _sales[i].SaleLoyalty.ToString()
+                });
+            }
+        }
+
+        public void DisplayStaffSale()
+        {
+            List<string[]> printSaleDB = new List<string[]>();
+            printSaleDB.Add(new string[] {"staffID", "CustomerName","TotalPrice"});
+            for (int i = 0; i < _sales.Count; i++)
+            {
+                printSaleDB.Add(new string[] {
+                    _sales[i].StaffID.ToString(),
+                    _sales[i].CustomerName,
+                    _sales[i].TotalPrice.ToString("C"),
                 });
             }
         }

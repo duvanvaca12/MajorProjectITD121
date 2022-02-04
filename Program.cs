@@ -7,6 +7,7 @@ class Program
     static Store store = new Store();
     static Staff staff = new Staff(1, "admin", "Dane", true);
     public static int count = 1;
+    
     static void Main(string[] args)
     {
         if (Login())
@@ -71,7 +72,7 @@ class Program
         string PASS = staff.Password;
         int userID;
         string password;
-
+        store.ValidateLogin(USER,PASS);
         do
         {
             Console.Clear();
@@ -116,7 +117,7 @@ class Program
                 UpdatePass();
                 break;
             case "2":
-                Console.WriteLine("2");
+                ViewStaffSale();
                 break;
             case "3": // Enter a date
                 RegisterStaff();
@@ -138,7 +139,7 @@ class Program
         Console.Clear();
         //Staff staff = new Staff(1,"admin","Dane",true);
         string currentPW = Input.GetFieldSimple("Enter current password");
-        currentPW = staff.Password;
+        //currentPW = staff.Password;
         string newPW = Input.GetFieldSimple("Enter new password");
         string confirm = Input.GetFieldSimple("Confirm?");
         if (confirm == "yes" || confirm == "Yes")
@@ -146,6 +147,13 @@ class Program
             currentPW = newPW;
             Console.WriteLine("Password Updated!");
         }
+        staff.Password = currentPW;
+        Input.GetEnter();
+    }
+    static void ViewStaffSale()
+    {
+        Console.Clear();
+        store.DisplayStaffSale();
         Input.GetEnter();
     }
     static void RegisterStaff()
@@ -163,7 +171,7 @@ class Program
         else { admin = false; }
         Console.WriteLine("Staff added!");
         store.AddStaff(staff.ID, staffPassword, staffName, admin);
-
+        store.ValidateLogin(staff.ID,staffPassword);
         Input.GetEnter();
     }
     static void ViewStaff()
@@ -349,8 +357,7 @@ class Program
         string ProductName = Input.GetFieldSimple("Enter product name");
         int ProductPrice = int.Parse(Input.GetFieldSimple("Enter Price"));
         int ProductQuantity = int.Parse(Input.GetFieldSimple("Enter stock"));
-        //Product product = new Product(ProductName,ProductPrice,ProductQuantity);
-        Product product = new Product(ProductName, ProductPrice, ProductQuantity);
+       // Product product = new Product(ProductName, ProductPrice, ProductQuantity);
         store.AddProductDB(ProductName, ProductPrice, ProductQuantity);
         Console.WriteLine("product info added!");
         Input.GetEnter();
@@ -361,26 +368,33 @@ class Program
         //Product product = new Product();
         //store.GetProduct();
     }
+    
     static void GetSaleMenu()
     {
         Console.Clear();
         //int customerID, int productID, int quantity,
+        store.ValidateLogin(staff.ID,staff.Password);
         bool spendPoints = false;
         bool applyDelivery = false;
         int SaleCustomerID = int.Parse(Input.GetFieldSimple("Select customer ID"));
+        //Console.Clear();
         //Customer customer = store.GetCustomer(SaleCustomerID);
         int SaleProductID = int.Parse(Input.GetFieldSimple("Select product ID"));
+        //Console.Clear();
         int SaleAmount = int.Parse(Input.GetFieldSimple("Type number of quantity"));
+        //Console.Clear();
         string SaleSpendLoyalty = Input.GetFieldSimple("Will you Spend points?");
         if (SaleSpendLoyalty == "Yes" || SaleSpendLoyalty == "Y")
         {
             spendPoints = true;
-        }
+        }else{spendPoints = false;}
+        //Console.Clear();
         string SaleDelivery = Input.GetFieldSimple("Will you apply delivery?");
         if (SaleDelivery == "Yes" || SaleDelivery == "Y")
         {
             applyDelivery = true;
-        }
+        }else{applyDelivery = false;}
+        //Console.Clear();
         store.ExecuteSale(SaleCustomerID, SaleProductID, SaleAmount, spendPoints,
         applyDelivery);
         store.DisplaySale();
