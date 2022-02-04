@@ -66,6 +66,7 @@ class Program
         bool validID = false;
         bool validPass = false;
         store.ValidateLogin(1,"admin");
+        store.AddStaff(1,"admin","Dane",true);
         Console.Clear();
         //const string USER = "admin";
         //const string PASS = "admin";
@@ -161,7 +162,6 @@ class Program
     {
         Console.Clear();
         //Staff staff = new Staff(1,"admin",true);
-        store.AddStaff(1,"admin","Dane",true);
         bool staffAdmin = false;
         string staffName = Input.GetFieldSimple("Enter staff name");
         string staffPassword = Input.GetFieldPassword("Enter staff password");
@@ -172,11 +172,8 @@ class Program
         }
         else { staffAdmin = false; }
         Console.WriteLine("Staff added!");
-        staff.ID = count + 1;
-        staff.Name = staffName;
-        staff.Password = staffPassword;
-        staff.Admin = staffAdmin;
-        store.AddStaff(staff.ID, staffPassword, staffName, staffAdmin);
+        int ID = count + 1;
+        store.AddStaff(ID, staffPassword, staffName, staffAdmin);
         store.ValidateLogin(staff.ID,staffPassword);
         Input.GetEnter();
     }

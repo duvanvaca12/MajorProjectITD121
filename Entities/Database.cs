@@ -363,7 +363,7 @@ namespace Database.Shop
             }
             Sale sale = new Sale(customer.Name,product.ProductName,product.ProductID,
             product.Quantity,TotalPrice,customer.LoyaltyPoint,staff.ID);
-            
+
             AddSaleDB(customer.Name, product.ProductName, productID, quantity, TotalPrice,
             pointsEarned, staff.ID);
         }
@@ -415,6 +415,7 @@ namespace Database.Shop
                     _sales[i].SaleLoyalty.ToString()
                 });
             }
+            Utility.PrintTable(printSaleDB);
         }
 
         public void DisplayStaffSale()
@@ -429,6 +430,7 @@ namespace Database.Shop
                     _sales[i].TotalPrice.ToString("C"),
                 });
             }
+            Utility.PrintTable(printSaleDB);
         }
 
         public void DisplayStaffDB()
